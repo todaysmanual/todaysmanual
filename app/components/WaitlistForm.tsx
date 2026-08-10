@@ -6,12 +6,14 @@ type FormState = "idle" | "loading" | "success";
 
 export function WaitlistForm() {
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    const normalizedEmail = email.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
 
     if (!valid) {
       setError("Enter a valid email address.");
@@ -20,7 +22,37 @@ export function WaitlistForm() {
 
     setError("");
     setState("loading");
-    window.setTimeout(() => setState("success"), 850);
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: normalizedEmail, company }),
+        signal: controller.signal,
+      });
+
+      const result = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(result?.error || "We could not add you right now. Please try again.");
+      }
+
+      setState("success");
+    } catch (submissionError) {
+      setState("idle");
+      setError(
+        submissionError instanceof Error && submissionError.name !== "AbortError"
+          ? submissionError.message
+          : "The request took too long. Please try again.",
+      );
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
 
   if (state === "success") {
@@ -40,6 +72,17 @@ export function WaitlistForm() {
 
   return (
     <form className="waitlist" onSubmit={handleSubmit} noValidate>
+      <label className="waitlist__honeypot" aria-hidden="true">
+        Company
+        <input
+          name="company"
+          type="text"
+          value={company}
+          tabIndex={-1}
+          autoComplete="off"
+          onChange={(event) => setCompany(event.target.value)}
+        />
+      </label>
       <label className="sr-only" htmlFor="waitlist-email">Email address</label>
       <div className={`waitlist__control${error ? " waitlist__control--error" : ""}`}>
         <input
