@@ -163,8 +163,9 @@ The existing logo files remain unchanged:
 - `public/todaysmanual1.png`
 - `public/todaysmanuallogo.png`
 
-Editorial images are stored locally in `public/editorial/` so components do not depend on remote image delivery. The complete set now uses Ghana-focused media from Wikimedia Commons. Every image is CC0, public domain, CC BY or CC BY-SA, and every creator, source page, license and exact alt description is recorded in `app/data/imageCredits.ts` and displayed publicly at `/image-credits`:
+Editorial images are stored locally in `public/editorial/` so components do not depend on remote image delivery. The set combines the owner-selected original Unsplash hero portrait with Ghana-focused media from Wikimedia Commons. Every image is covered by the Unsplash License, CC0, public domain, CC BY or CC BY-SA, and every available creator, source page, license and exact alt description is recorded in `app/data/imageCredits.ts` and displayed publicly at `/image-credits`:
 
+- `hero-laptop.jpg`
 - `student.jpg`
 - `money.jpg`
 - `skills.jpg`
@@ -178,7 +179,7 @@ Editorial images are stored locally in `public/editorial/` so components do not 
 - `interview.jpg`
 - `voice.jpg`
 
-The current set depicts University of Ghana workshop participants, Ghanaian students using laptops, a northern Ghana market trader, a Ghana environmental initiative, a Young Entrepreneurs Summit, a Ghana 50 cedi banknote, an Accra market street and Ghanaian broadcaster Anita Erskine in an interview. The files are delivered locally under standardized filenames, while the unmodified Commons source pages remain linked from the credits page. The cedi source was converted from PNG to JPEG for consistent card delivery; responsive crops are applied by CSS in the browser.
+The homepage lead now uses the original portrait of a young man with a laptop and patterned bag, stored separately as `hero-laptop.jpg`. It is constrained to a fixed desktop image column and responsive aspect-ratio frame with `object-fit: cover`, so future replacements crop inside the allocated space instead of stretching the section. Quick Read 01 retains the newer University of Ghana workshop image in `student.jpg`; changing one file no longer changes both placements. The rest of the set depicts University of Ghana workshop participants, Ghanaian students using laptops, a northern Ghana market trader, a Ghana environmental initiative, a Young Entrepreneurs Summit, a Ghana 50 cedi banknote, an Accra market street and Ghanaian broadcaster Anita Erskine in an interview. The files are delivered locally under standardized filenames, while the source pages remain linked from the credits page. The cedi source was converted from PNG to JPEG for consistent card delivery; responsive crops are applied by CSS in the browser.
 
 Open-license attribution is part of the product, not only the repository documentation. The footer includes an Image Credits destination, and the credits route provides visible source and license links without suggesting that any creator or pictured person endorses Today’s Manual.
 

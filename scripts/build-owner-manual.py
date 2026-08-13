@@ -333,7 +333,8 @@ assets = [
     Asset("public/todaysmanual1.png", "Header, mobile drawer and footer wordmark", "Official horizontal Today’s Manual logo", "Keep unless the official brand team supplies a revised master", "Transparent horizontal logo", "KEEP"),
     Asset("public/todaysmanuallogo.png", "Favicon, shortcut icon and Apple touch icon", "Official square Today’s Manual mark", "Keep unless a new favicon package is approved", "Square transparent mark", "KEEP"),
     Asset("public/og.png", "Open Graph and X link preview", "Generated Today’s Manual editorial social card", "Replace only when a final launch campaign or approved social card exists", "1.91:1 landscape", "REVIEW"),
-    Asset("public/editorial/student.jpg", "Homepage hero and Quick Read 01", "Young Ghanaian adults using laptops at a University of Ghana workshop", "Open-license image can remain; commission a story-specific graduate portrait for a future exclusive feature", "Hero: wide 4:5 crop; Quick Read: 3:2 strip", "KEEP"),
+    Asset("public/editorial/hero-laptop.jpg", "Homepage lead story only", "Young man using a laptop while carrying a colourful patterned shoulder bag", "Replace this file to update only the homepage lead. Use a portrait or landscape photo at least 1200px wide; CSS crops it inside the existing frame", "Desktop: fixed 540px hero row with cover crop; tablet: 430px frame; mobile: 1.2:1 frame", "KEEP"),
+    Asset("public/editorial/student.jpg", "Quick Read 01 only", "Young Ghanaian adults using laptops at a University of Ghana workshop", "Open-license image can remain; replace this file only when updating Quick Read 01", "Wide 3:2 strip", "KEEP"),
     Asset("public/editorial/money.jpg", "Money side story and Money Manual", "A market trader in northern Ghana", "Open-license image can remain; replace if the story requires a specific named business owner", "Wide 3:2", "KEEP"),
     Asset("public/editorial/skills.jpg", "Skills side story and Skills Manual", "Young Ghanaian women at a technology workshop", "Open-license image can remain; replace with a sharper landscape frame if supplied", "Wide 3:2 from a vertical original", "REVIEW"),
     Asset("public/editorial/work.jpg", "Work Manual and generic article fallback", "Ghanaian participants collaborating at a University of Ghana workshop", "Open-license image can remain; create a separate neutral fallback when the article library expands", "Wide 3:2", "KEEP"),
@@ -349,6 +350,7 @@ assets = [
 
 
 image_licenses = [
+    ("hero-laptop.jpg", "Unsplash contributor (metadata unavailable)", "Unsplash License", "Original Today’s Manual hero / photo-1694175271713-a6e2cc378980"),
     ("student.jpg", "Zapsmedia25", "CC BY 4.0", "University of Ghana workshop 14"),
     ("money.jpg", "Musahfm", "CC BY-SA 4.0", "Market trader in northern Ghana"),
     ("skills.jpg", "Edith Violet Naisubi", "CC BY-SA 4.0", "Green Ghana Initiative 2"),
@@ -444,7 +446,7 @@ placeholder_routes = [
 file_map = [
     ("app/page.tsx", "Homepage assembly, dynamic issue date and initial clock values", "Change section order or top-level data inputs"),
     ("app/data/homepage.ts", "Primary homepage content arrays and article metadata", "First place to update story titles, images, excerpts and read times"),
-    ("app/data/imageCredits.ts", "Creator, source, license and alt text for every Ghana-focused editorial image", "Update whenever an editorial picture changes"),
+    ("app/data/imageCredits.ts", "Creator, source, license and alt text for every editorial image", "Update whenever an editorial picture changes"),
     ("app/data/contact.ts", "Single source for official email and social destinations", "Update this file when an official address or profile changes; header and footer update together"),
     ("app/components/Header.tsx", "Issue bar, clocks, official contact links, navigation, search and mobile drawer", "Change topics, clock zones, issue number, contact presentation and search behavior"),
     ("app/components/HeroStory.tsx", "Hero layout and byline presentation", "Change fixed hero labels or component layout"),
@@ -462,7 +464,7 @@ file_map = [
     ("app/image-credits/page.tsx", "Public open-license attribution page", "Keep source and license links visible and current"),
     ("app/layout.tsx", "SEO metadata, icons and social preview", "Change production title, description and social metadata"),
     ("app/globals.css", "Complete responsive visual system", "Change design tokens, breakpoints and section composition carefully"),
-    ("public/editorial/", "Local Ghana-focused open-license editorial photography", "Replace files only with matching credit and alt-text updates"),
+    ("public/editorial/", "Local open-license editorial photography, including the dedicated homepage hero", "Replace files only with matching credit and alt-text updates"),
     ("public/og.png", "Social sharing image", "Replace with approved campaign asset"),
     ("TODAYS_MANUAL_REBUILD.md", "Technical redesign log", "Keep updated after structural changes"),
 ]
@@ -471,7 +473,7 @@ file_map = [
 def add_asset_catalog(story: list[Flowable]) -> None:
     story += section("Complete image and picture replacement catalog", "Visual assets")
     story.append(P(
-        "Every current image is shown below. The editorial set now uses Ghana-focused media from Wikimedia Commons under CC0, public-domain, CC BY or CC BY-SA terms. The exact live source links are stored in <font name='CourierNew'>app/data/imageCredits.ts</font> and displayed at <font name='CourierNew'>/image-credits</font>. When replacing an image, update the credit and alt text at the same time.",
+        "Every current image is shown below. The owner-selected homepage portrait uses the Unsplash License; the remaining Ghana-focused files use Wikimedia Commons media under CC0, public-domain, CC BY or CC BY-SA terms. The exact live source links are stored in <font name='CourierNew'>app/data/imageCredits.ts</font> and displayed at <font name='CourierNew'>/image-credits</font>. When replacing an image, update the credit and alt text at the same time.",
         "ManualBody",
     ))
     story.append(callout(
@@ -587,7 +589,7 @@ def build_story() -> list[Flowable]:
     story += section("Priority replacement checklist", "What must change")
     priorities = [
         ("P0 - before any public launch", "Replace or verify all three Daily Brief headlines; verify ownership of the supplied social profiles; add Privacy Policy and Terms; configure Resend; replace all article preview bodies; retain the public image-credit page while open-license media is used."),
-        ("P1 - editorial launch quality", "Review every Ghana-focused image for story fit and responsive crop; replace the placeholder Voices quote and identity; use real author names; confirm read times; replace the generated social preview if a campaign asset exists."),
+        ("P1 - editorial launch quality", "Review every editorial image for story fit and responsive crop; replace the placeholder Voices quote and identity; use real author names; confirm read times; replace the generated social preview if a campaign asset exists."),
         ("P2 - operational maturity", "Connect a CMS; add search indexing; add category pagination; add analytics; add newsletter subscriber storage; add a working Voices carousel."),
         ("P3 - ongoing edition work", "Increment Issue 001; refresh lead story; refresh Quick Reads; update daily news; check opportunities; review metadata and image crops."),
     ]
@@ -856,7 +858,7 @@ def build_story() -> list[Flowable]:
 
     screenshot_page(story, "Search overlay", "search-overlay-desktop.jpg", "Desktop search state with popular topic routes. Search currently filters only this preset topic list.", "Interactive state")
     screenshot_page(story, "Mobile navigation drawer", "mobile-menu.jpg", "Mobile drawer with all five category links, the Morning Manual call to action, official contact email and five SVG social links. Captured at 390 x 844.", "Interactive state")
-    screenshot_page(story, "Ghana image credits", "image-credits.jpg", "Public attribution page for all twelve Ghana-focused editorial images, including creator, Commons source and reuse license links.", "Page screenshot")
+    screenshot_page(story, "Editorial image credits", "image-credits.jpg", "Public attribution page for all thirteen editorial images, including the restored Unsplash hero portrait and twelve Ghana-focused Commons assets, with creator details where available, source pages and reuse license links.", "Page screenshot")
 
     category_notes = {
         "work": "Work category using the shared category template and available Work stories.",
@@ -890,7 +892,7 @@ def build_story() -> list[Flowable]:
     story.append(Spacer(1, 5 * mm))
     final_items = [
         "I know that app/data/homepage.ts is the primary homepage content source.",
-        "I have reviewed every Ghana-focused image, its story fit, its open license and its visible credit.",
+        "I have reviewed every editorial image, its story fit, its open license and its visible credit.",
         "I understand that all eight known article routes still use preview bodies.",
         "I will verify daily news, financial claims, jobs and opportunities before publication.",
         "I will keep the supplied official social URLs current and create the remaining legal pages.",

@@ -12,8 +12,19 @@ export type ImageCredit = {
 
 export const imageCredits: ImageCredit[] = [
   {
+    file: "hero-laptop.jpg",
+    placement: "Homepage lead story only",
+    title: "Young man working on a laptop",
+    creator: "Unsplash contributor (original download metadata unavailable)",
+    license: "Unsplash License",
+    licenseUrl: "https://unsplash.com/license",
+    sourceUrl: "https://images.unsplash.com/photo-1694175271713-a6e2cc378980",
+    alt: "Young man working on a laptop while carrying a colourful patterned shoulder bag",
+    note: "Restored from the original Today’s Manual build at the owner’s request. Keep this dedicated file separate from student.jpg so replacing the homepage lead image does not alter Quick Read 01.",
+  },
+  {
     file: "student.jpg",
-    placement: "Lead story and Quick Read 01",
+    placement: "Quick Read 01",
     title: "University of Ghana workshop participants using laptops",
     creator: "Zapsmedia25",
     license: "CC BY 4.0",

@@ -106,7 +106,7 @@ img { display: block; max-width: 100%; }
 .mobile-drawer__socials a { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid var(--line); background: var(--white); }
 
 /* Hero */
-.hero-story { display: grid; min-height: 480px; padding-block: 38px 32px; grid-template-columns: minmax(320px, .98fr) minmax(390px, 1.25fr) minmax(280px, .86fr); gap: 16px; }
+.hero-story { display: grid; height: 540px; min-height: 0; padding-block: 38px 32px; grid-template-columns: minmax(320px, .98fr) minmax(390px, 1.25fr) minmax(280px, .86fr); grid-template-rows: minmax(0, 1fr); gap: 16px; }
 .hero-story__copy { display: flex; padding: 22px 24px 14px 0; flex-direction: column; }
 .hero-story h1 { max-width: 490px; margin: 18px 0 16px; font-size: clamp(2.7rem, 3.75vw, 4.5rem); font-weight: 760; letter-spacing: -.065em; line-height: .94; }
 .hero-story__excerpt { max-width: 420px; margin: 0; color: rgba(7, 26, 56, .86); font-size: .88rem; line-height: 1.55; }
@@ -116,8 +116,8 @@ img { display: block; max-width: 100%; }
 .hero-story__byline strong { font-size: .65rem; }
 .hero-story__byline span { display: flex; margin-top: 5px; align-items: center; gap: 7px; font-family: var(--font-geist-mono); font-size: .48rem; letter-spacing: .06em; text-transform: uppercase; }
 .hero-story__byline i { width: 3px; height: 3px; background: var(--orange); }
-.hero-story__image { position: relative; overflow: hidden; min-height: 430px; border-radius: 8px; background: #d4d9d6; }
-.hero-story__image img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; transition: transform .55s ease; }
+.hero-story__image { position: relative; overflow: hidden; height: 100%; min-height: 0; border-radius: 8px; background: #d4d9d6; }
+.hero-story__image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; transition: transform .55s ease; }
 .image-link:hover img { transform: scale(1.025); }
 .image-badge { position: absolute; top: 18px; left: 18px; padding: .5rem .65rem; border-radius: 3px; background: var(--orange); color: #fff; font-family: var(--font-geist-mono); font-size: .52rem; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
 .hero-story__secondary { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; }
@@ -319,9 +319,9 @@ img { display: block; max-width: 100%; }
   .menu-button { display: grid; }
   .mobile-email-button { display: grid; }
   .subscribe-button { display: none; }
-  .hero-story { grid-template-columns: minmax(0, 1.15fr) minmax(250px, .85fr); }
+  .hero-story { height: auto; grid-template-columns: minmax(0, 1.15fr) minmax(250px, .85fr); grid-template-rows: auto auto; }
   .hero-story__copy { min-height: 430px; }
-  .hero-story__image { min-height: 430px; }
+  .hero-story__image { height: 430px; min-height: 430px; }
   .hero-story__secondary { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; grid-template-rows: 230px; }
   .start-here__grid, .manuals-section__grid, .quick-section__grid { display: block; }
   .section-intro { display: grid; margin-bottom: 22px; grid-template-columns: 1fr 1fr; align-items: end; column-gap: 2rem; }
@@ -370,7 +370,7 @@ img { display: block; max-width: 100%; }
   .hero-story__copy { display: contents; }
   .hero-story__copy .eyebrow { order: 1; }
   .hero-story h1 { order: 2; margin: 13px 0 3px; font-size: clamp(2.85rem, 14vw, 4.2rem); line-height: .92; }
-  .hero-story__image { order: 3; min-height: 0; margin-top: 15px; aspect-ratio: 1.2; }
+  .hero-story__image { order: 3; height: auto; min-height: 0; margin-top: 15px; aspect-ratio: 1.2; }
   .hero-story__excerpt { order: 4; margin-top: 17px; font-size: .83rem; }
   .hero-story__meta-row { order: 5; display: grid; margin-top: 4px; grid-template-columns: 34px 1fr; }
   .hero-story__meta-row .dark-button { width: 100%; margin-top: 8px; }
@@ -431,8 +431,8 @@ img { display: block; max-width: 100%; }
 
 @media (min-width: 1700px) {
   .page-shell { width: min(100% - 10rem, 1680px); }
-  .hero-story { min-height: 560px; grid-template-columns: .95fr 1.3fr .84fr; }
-  .hero-story__image { min-height: 500px; }
+  .hero-story { height: 590px; min-height: 0; grid-template-columns: .95fr 1.3fr .84fr; }
+  .hero-story__image { min-height: 0; }
   .hero-story h1 { font-size: 4.8rem; }
   .start-here__grid, .manuals-section__grid, .quick-section__grid { grid-template-columns: 290px 1fr; }
   .start-card { min-height: 230px; }

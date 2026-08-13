@@ -17,7 +17,7 @@ export function HeroStory() {
       </div>
 
       <a className="hero-story__image image-link" href={`/article/${heroArticle.slug}`} aria-label={`Read ${heroArticle.title}`}>
-        <img src={heroArticle.image} alt={heroArticle.imageAlt} width="1200" height="1500" fetchPriority="high" />
+        <img src={heroArticle.image} alt={heroArticle.imageAlt} width="1200" height="800" fetchPriority="high" />
         <span className="image-badge">Featured</span>
       </a>
 

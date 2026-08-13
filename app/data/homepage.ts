@@ -40,8 +40,8 @@ export const heroArticle: Article = {
   category: "Work",
   excerpt:
     "The real world looks nothing like the classroom. Here’s what actually changes — and how to prepare for it.",
-  image: "/editorial/student.jpg",
-  imageAlt: "Young Ghanaian adults working together on laptops at a University of Ghana workshop",
+  image: "/editorial/hero-laptop.jpg",
+  imageAlt: "Young man working on a laptop while carrying a colourful patterned shoulder bag",
   readTime: "8 min read",
   featured: true,
 };

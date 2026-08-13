@@ -79,6 +79,7 @@ test("includes responsive, accessible, motion-aware production styling", async (
     access(new URL("../public/todaysmanual1.png", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
     access(new URL("../public/editorial/student.jpg", import.meta.url)),
+    access(new URL("../public/editorial/hero-laptop.jpg", import.meta.url)),
     access(new URL("../app/data/imageCredits.ts", import.meta.url)),
   ]);
 });
