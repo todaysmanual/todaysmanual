@@ -14,20 +14,21 @@ async function render() {
   );
 }
 
-test("server-renders the Today's Manual coming-soon page", async () => {
+test("server-renders the complete Today's Manual editorial homepage", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Today(?:'|&#x27;)s Manual — Coming Soon/);
-  assert.match(html, /COMING/);
-  assert.match(html, /SOON/);
-  assert.match(html, /A modern guide for a generation finding its way/);
-  assert.match(html, /todaysmanual@gmail\.com/);
-  assert.match(html, /href="\/todaysmanuallogo\.png"/);
+  assert.match(html, /Nobody Told Us/);
+  assert.match(html, /After University/);
+  assert.match(html, /Where are you/);
+  assert.match(html, /The five manuals/i);
+  assert.match(html, /The Morning Manual/);
+  assert.match(html, /Made in Africa/);
+  assert.match(html, /href="https:\/\/todaysmanual\.com\/todaysmanuallogo\.png"/);
   assert.match(html, /src="\/todaysmanual1\.png"/);
-  assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
+  assert.doesNotMatch(html, /COMING SOON|codex-preview|Your site is taking shape/);
 });
 
 test("includes responsive, accessible, motion-aware production styling", async () => {
@@ -37,13 +38,16 @@ test("includes responsive, accessible, motion-aware production styling", async (
   ]);
 
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.match(css, /@media \(max-width:\s*760px\)/);
+  assert.match(css, /@media \(max-width:\s*640px\)/);
   assert.match(css, /@media \(max-width:\s*380px\)/);
   assert.match(css, /overflow-x:\s*hidden/);
-  assert.match(packageJson, /"framer-motion"/);
+  assert.match(css, /\.search-overlay/);
+  assert.match(packageJson, /"next"/);
 
   await Promise.all([
     access(new URL("../public/todaysmanuallogo.png", import.meta.url)),
     access(new URL("../public/todaysmanual1.png", import.meta.url)),
+    access(new URL("../public/og.png", import.meta.url)),
+    access(new URL("../public/editorial/student.jpg", import.meta.url)),
   ]);
 });

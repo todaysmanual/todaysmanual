@@ -13,30 +13,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Today's Manual — Coming Soon",
+  metadataBase: new URL("https://todaysmanual.com"),
+  title: {
+    default: "Today’s Manual — The guide for what comes next",
+    template: "%s — Today’s Manual",
+  },
   description:
-    "Today's Manual is a modern guide for navigating work, money, skills, life and success in a changing world.",
+    "Practical guidance for young Africans navigating work, money, skills, life and opportunity.",
   icons: {
     icon: "/todaysmanuallogo.png",
     shortcut: "/todaysmanuallogo.png",
     apple: "/todaysmanuallogo.png",
   },
   openGraph: {
-    title: "Today's Manual",
-    description: "The world changed. The manual changed with it.",
+    title: "Today’s Manual — The guide for what comes next",
+    description: "Practical guidance for navigating work, money, skills, life and opportunity.",
     type: "website",
     url: "https://todaysmanual.com",
     siteName: "Today's Manual",
+    images: [{ url: "/og.png", width: 1731, height: 909, alt: "Today’s Manual — The guide for what comes next" }],
   },
   twitter: {
-    card: "summary",
-    title: "Today's Manual",
-    description: "The world changed. The manual changed with it.",
+    card: "summary_large_image",
+    title: "Today’s Manual — The guide for what comes next",
+    description: "Practical guidance for navigating work, money, skills, life and opportunity.",
+    images: ["/og.png"],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#071A38",
+  themeColor: "#f7f3ec",
   colorScheme: "light",
 };
 

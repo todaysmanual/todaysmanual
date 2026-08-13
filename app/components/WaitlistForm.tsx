@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { Icon } from "./Icon";
 
 type FormState = "idle" | "loading" | "success";
 
@@ -61,10 +62,10 @@ export function WaitlistForm() {
         className="waitlist-success"
         role="status"
       >
-        <span className="waitlist-success__mark" aria-hidden="true">✓</span>
+        <span className="waitlist-success__mark" aria-hidden="true"><Icon name="mail" size={19} /></span>
         <span>
-          <strong>You&apos;re on the list.</strong>
-          <small>We&apos;ll let you know when the first issue lands.</small>
+          <strong>You&apos;re on the Morning Manual list.</strong>
+          <small>Watch your inbox for the next edition.</small>
         </span>
       </div>
     );
@@ -105,7 +106,7 @@ export function WaitlistForm() {
           type="submit"
           disabled={state === "loading"}
         >
-          <span>{state === "loading" ? "Joining…" : "Join the waitlist  →"}</span>
+          <span>{state === "loading" ? "Joining…" : "Get the Manual"}</span>
         </button>
       </div>
       {error && (

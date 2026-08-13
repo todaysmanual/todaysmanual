@@ -1,12 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
 export function BrandLogo() {
   return (
     <img
-      className="brand-logo fm-reveal"
-      data-motion-delay="0.18"
+      className="brand-logo"
       src="/todaysmanual1.png"
       alt="Today's Manual"
-      width={1800}
-      height={1800}
+      width={1600}
+      height={372}
     />
   );
 }
