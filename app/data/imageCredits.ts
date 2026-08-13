@@ -1,0 +1,135 @@
+export type ImageCredit = {
+  file: string;
+  placement: string;
+  title: string;
+  creator: string;
+  license: string;
+  licenseUrl: string;
+  sourceUrl: string;
+  alt: string;
+  note?: string;
+};
+
+export const imageCredits: ImageCredit[] = [
+  {
+    file: "student.jpg",
+    placement: "Lead story and Quick Read 01",
+    title: "University of Ghana workshop participants using laptops",
+    creator: "Zapsmedia25",
+    license: "CC BY 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Wikiforhumanrights_Workshop_for_Students_at_the_Centre_for_Climate_Change_and_Sustainability_Studies_Department_university_of_Ghana_14.jpg",
+    alt: "Young Ghanaian adults working together on laptops at a University of Ghana workshop",
+  },
+  {
+    file: "money.jpg",
+    placement: "Money story and Money Manual",
+    title: "Market trader in northern Ghana",
+    creator: "Musahfm",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:A_trader_displaying_her_wares_in_a_market_in_northern_ghana.jpg",
+    alt: "A Ghanaian market trader serving customers at her stall in northern Ghana",
+  },
+  {
+    file: "skills.jpg",
+    placement: "Skills story and Skills Manual",
+    title: "Ghanaian participants in a technology workshop",
+    creator: "Edith Violet Naisubi",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Green_Ghana_Initiative_2.jpg",
+    alt: "Young Ghanaian women participating in a laptop-based technology workshop",
+  },
+  {
+    file: "work.jpg",
+    placement: "Work Manual and article fallback",
+    title: "Collaborative learning at the University of Ghana",
+    creator: "Zapsmedia25",
+    license: "CC BY 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Wikiforhumanrights_Workshop_for_Students_at_the_Centre_for_Climate_Change_and_Sustainability_Studies_Department_university_of_Ghana_13.jpg",
+    alt: "Ghanaian professionals and students collaborating around laptops at a workshop",
+  },
+  {
+    file: "life.jpg",
+    placement: "Life Manual",
+    title: "Green Ghana Initiative team",
+    creator: "Edith Violet Naisubi",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Green_Ghana_Initiative_1.jpg",
+    alt: "A Ghanaian environmental initiative team gathered around a work table",
+  },
+  {
+    file: "opportunity.jpg",
+    placement: "Opportunity Manual",
+    title: "University of Ghana workshop group",
+    creator: "Zapsmedia25",
+    license: "CC BY 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Wikiforhumanrights_Workshop_for_Students_at_the_Centre_for_Climate_Change_and_Sustainability_Studies_Department_university_of_Ghana_31.jpg",
+    alt: "A diverse group of young Ghanaian adults outside the University of Ghana",
+  },
+  {
+    file: "cash.jpg",
+    placement: "Quick Read 02",
+    title: "Ghana 50 cedi banknote",
+    creator: "Bank of Ghana",
+    license: "Public domain",
+    licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:50_Ghana_Cedis_01.png",
+    alt: "Front and back of a Ghana 50 cedi banknote",
+    note: "Source PNG converted to JPEG for consistent site delivery.",
+  },
+  {
+    file: "desk.jpg",
+    placement: "Quick Read 03",
+    title: "Ghanaian students learning with a laptop",
+    creator: "Bright Kwame Ayisi (Kwameghana)",
+    license: "CC0 1.0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Students_using_a_computer_laptop.jpg",
+    alt: "Ghanaian students learning together with a laptop in a classroom",
+  },
+  {
+    file: "office.jpg",
+    placement: "Quick Read 04",
+    title: "Young Entrepreneurs Summit auditorium",
+    creator: "Authenticnewsroom",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Young_Entrepreneurs_Summit_1.jpg",
+    alt: "Attendees preparing for a Young Entrepreneurs Summit in Ghana",
+  },
+  {
+    file: "buildings.jpg",
+    placement: "Quick Read 05",
+    title: "Street of Accra",
+    creator: "Esthee2010",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Street_of_Accra.jpg",
+    alt: "People walking past small businesses on a busy market street in Accra",
+  },
+  {
+    file: "interview.jpg",
+    placement: "The Interview Manual feature",
+    title: "Anita Erskine in an interview on Citi TV",
+    creator: "Uprising Man",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Anita_Erskine_in_an_interview_on_Citi_TV.jpg",
+    alt: "Ghanaian broadcaster Anita Erskine taking part in a television interview",
+  },
+  {
+    file: "voice.jpg",
+    placement: "Voices feature",
+    title: "Participant speaking at a University of Ghana workshop",
+    creator: "Zapsmedia25",
+    license: "CC BY 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Wikiforhumanrights_Workshop_for_Students_at_the_Centre_for_Climate_Change_and_Sustainability_Studies_Department_university_of_Ghana_02.jpg",
+    alt: "A young Ghanaian man speaking during a University of Ghana workshop",
+  },
+];

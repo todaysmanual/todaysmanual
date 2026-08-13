@@ -333,18 +333,34 @@ assets = [
     Asset("public/todaysmanual1.png", "Header, mobile drawer and footer wordmark", "Official horizontal Today’s Manual logo", "Keep unless the official brand team supplies a revised master", "Transparent horizontal logo", "KEEP"),
     Asset("public/todaysmanuallogo.png", "Favicon, shortcut icon and Apple touch icon", "Official square Today’s Manual mark", "Keep unless a new favicon package is approved", "Square transparent mark", "KEEP"),
     Asset("public/og.png", "Open Graph and X link preview", "Generated Today’s Manual editorial social card", "Replace only when a final launch campaign or approved social card exists", "1.91:1 landscape", "REVIEW"),
-    Asset("public/editorial/student.jpg", "Homepage hero and Quick Read 01", "Young African student using a laptop", "Commission a hero image that matches the After University story; consider a separate image for Quick Read 01", "Hero: wide 4:5 crop; Quick Read: 3:2 strip", "HIGH"),
-    Asset("public/editorial/money.jpg", "Money side story and Money Manual", "Plant beside coins", "Replace with publication-owned financial imagery; avoid reusing one photo twice", "Wide 3:2", "HIGH"),
-    Asset("public/editorial/skills.jpg", "Skills side story and Skills Manual", "Programming code on laptop", "Replace with a modern skill-building scene featuring the target audience", "Wide 3:2", "HIGH"),
-    Asset("public/editorial/work.jpg", "Work Manual and generic article fallback", "Black professionals collaborating in an office", "Use an owned workplace feature image; create a neutral fallback separately", "Wide 3:2", "MEDIUM"),
-    Asset("public/editorial/life.jpg", "Life Manual", "Layered mountain landscape", "Replace with an owned wellbeing, relationships or lifestyle image", "Wide 3:2", "HIGH"),
-    Asset("public/editorial/opportunity.jpg", "Opportunity Manual", "Technology/city scene", "Replace with a jobs, scholarship, open-door or travel opportunity image; update alt text immediately", "Wide 3:2", "CRITICAL"),
-    Asset("public/editorial/cash.jpg", "Quick Read 02", "Close-up financial/lifestyle object image", "Replace with a clear Ghana cedi or first-income image; update alt text to match", "Wide 3:2", "CRITICAL"),
-    Asset("public/editorial/desk.jpg", "Quick Read 03", "Pen and written page", "Replace with a learning or skills practice scene if available", "Wide 3:2", "MEDIUM"),
-    Asset("public/editorial/office.jpg", "Quick Read 04", "Modern office interior", "Replace with a workplace conversation or team meeting", "Wide 3:2", "MEDIUM"),
-    Asset("public/editorial/buildings.jpg", "Quick Read 05", "City office towers", "Replace with an entrepreneurship or side-hustle image", "Wide 3:2", "MEDIUM"),
-    Asset("public/editorial/interview.jpg", "The Interview Manual feature", "Interview paperwork and writing", "Replace with an owned interview-preparation or interview-room image", "Wide 3:2", "MEDIUM"),
-    Asset("public/editorial/voice.jpg", "Voices quote portrait", "Young professional portrait", "Replace with the real Kofi portrait only with consent, or change the name and quote", "Vertical portrait", "CRITICAL"),
+    Asset("public/editorial/student.jpg", "Homepage hero and Quick Read 01", "Young Ghanaian adults using laptops at a University of Ghana workshop", "Open-license image can remain; commission a story-specific graduate portrait for a future exclusive feature", "Hero: wide 4:5 crop; Quick Read: 3:2 strip", "KEEP"),
+    Asset("public/editorial/money.jpg", "Money side story and Money Manual", "A market trader in northern Ghana", "Open-license image can remain; replace if the story requires a specific named business owner", "Wide 3:2", "KEEP"),
+    Asset("public/editorial/skills.jpg", "Skills side story and Skills Manual", "Young Ghanaian women at a technology workshop", "Open-license image can remain; replace with a sharper landscape frame if supplied", "Wide 3:2 from a vertical original", "REVIEW"),
+    Asset("public/editorial/work.jpg", "Work Manual and generic article fallback", "Ghanaian participants collaborating at a University of Ghana workshop", "Open-license image can remain; create a separate neutral fallback when the article library expands", "Wide 3:2", "KEEP"),
+    Asset("public/editorial/life.jpg", "Life Manual", "A Ghana environmental initiative team", "Open-license image can remain; replace with an owned wellbeing or relationships feature when available", "Wide 3:2", "REVIEW"),
+    Asset("public/editorial/opportunity.jpg", "Opportunity Manual", "University of Ghana workshop group", "Open-license image can remain; update when a specific scholarship or opportunity campaign is featured", "Wide 3:2", "KEEP"),
+    Asset("public/editorial/cash.jpg", "Quick Read 02", "Front and back of a Ghana 50 cedi banknote", "Public-domain source can remain; use a higher-resolution owned cedi photograph if printed currency detail becomes important", "Wide card crop", "KEEP"),
+    Asset("public/editorial/desk.jpg", "Quick Read 03", "Ghanaian students learning with a laptop", "CC0 source can remain; replace if the story targets adult professional training instead of school learning", "Wide 3:2", "REVIEW"),
+    Asset("public/editorial/office.jpg", "Quick Read 04", "Young Entrepreneurs Summit auditorium", "Open-license image can remain; replace with an active workplace conversation for a stronger editorial match", "Wide panoramic crop", "REVIEW"),
+    Asset("public/editorial/buildings.jpg", "Quick Read 05", "People and small businesses on a market street in Accra", "Open-license image can remain; replace when the story profiles a specific side hustle", "Wide 3:2", "KEEP"),
+    Asset("public/editorial/interview.jpg", "The Interview Manual feature", "Ghanaian broadcaster Anita Erskine in a Citi TV interview", "Open-license image can remain with credit; replace only with an approved Today’s Manual interview session", "Wide 3:2", "KEEP"),
+    Asset("public/editorial/voice.jpg", "Voices quote portrait", "A Ghanaian participant speaking at a University of Ghana workshop", "Image is licensed, but the Kofi quote remains a placeholder; replace both image and attribution together for a real Voices profile", "Vertical portrait", "REVIEW"),
+]
+
+
+image_licenses = [
+    ("student.jpg", "Zapsmedia25", "CC BY 4.0", "University of Ghana workshop 14"),
+    ("money.jpg", "Musahfm", "CC BY-SA 4.0", "Market trader in northern Ghana"),
+    ("skills.jpg", "Edith Violet Naisubi", "CC BY-SA 4.0", "Green Ghana Initiative 2"),
+    ("work.jpg", "Zapsmedia25", "CC BY 4.0", "University of Ghana workshop 13"),
+    ("life.jpg", "Edith Violet Naisubi", "CC BY-SA 4.0", "Green Ghana Initiative 1"),
+    ("opportunity.jpg", "Zapsmedia25", "CC BY 4.0", "University of Ghana workshop 31"),
+    ("cash.jpg", "Bank of Ghana", "Public domain", "50 Ghana Cedis 01"),
+    ("desk.jpg", "Bright Kwame Ayisi", "CC0 1.0", "Students using a computer laptop"),
+    ("office.jpg", "Authenticnewsroom", "CC BY-SA 4.0", "Young Entrepreneurs Summit 1"),
+    ("buildings.jpg", "Esthee2010", "CC BY-SA 4.0", "Street of Accra"),
+    ("interview.jpg", "Uprising Man", "CC BY-SA 4.0", "Anita Erskine interview on Citi TV"),
+    ("voice.jpg", "Zapsmedia25", "CC BY 4.0", "University of Ghana workshop 02"),
 ]
 
 
@@ -428,6 +444,7 @@ placeholder_routes = [
 file_map = [
     ("app/page.tsx", "Homepage assembly, dynamic issue date and initial clock values", "Change section order or top-level data inputs"),
     ("app/data/homepage.ts", "Primary homepage content arrays and article metadata", "First place to update story titles, images, excerpts and read times"),
+    ("app/data/imageCredits.ts", "Creator, source, license and alt text for every Ghana-focused editorial image", "Update whenever an editorial picture changes"),
     ("app/data/contact.ts", "Single source for official email and social destinations", "Update this file when an official address or profile changes; header and footer update together"),
     ("app/components/Header.tsx", "Issue bar, clocks, official contact links, navigation, search and mobile drawer", "Change topics, clock zones, issue number, contact presentation and search behavior"),
     ("app/components/HeroStory.tsx", "Hero layout and byline presentation", "Change fixed hero labels or component layout"),
@@ -442,9 +459,10 @@ file_map = [
     ("app/[category]/page.tsx", "Validated shared category route", "Add categories only with corresponding data and visual rules"),
     ("app/components/CategoryPage.tsx", "Shared category page template", "Connect category stories to CMS data"),
     ("app/article/[slug]/page.tsx", "Shared article preview template", "Replace preview with complete article body rendering"),
+    ("app/image-credits/page.tsx", "Public open-license attribution page", "Keep source and license links visible and current"),
     ("app/layout.tsx", "SEO metadata, icons and social preview", "Change production title, description and social metadata"),
     ("app/globals.css", "Complete responsive visual system", "Change design tokens, breakpoints and section composition carefully"),
-    ("public/editorial/", "Local temporary editorial photography", "Replace files or update data paths"),
+    ("public/editorial/", "Local Ghana-focused open-license editorial photography", "Replace files only with matching credit and alt-text updates"),
     ("public/og.png", "Social sharing image", "Replace with approved campaign asset"),
     ("TODAYS_MANUAL_REBUILD.md", "Technical redesign log", "Keep updated after structural changes"),
 ]
@@ -453,7 +471,7 @@ file_map = [
 def add_asset_catalog(story: list[Flowable]) -> None:
     story += section("Complete image and picture replacement catalog", "Visual assets")
     story.append(P(
-        "Every current image is shown below. The word <b>temporary</b> means the image is usable for layout testing but should not automatically be treated as final licensed editorial art. When replacing an image, keep the same filename for the quickest swap, or update the path in <font name='CourierNew'>app/data/homepage.ts</font>. Always rewrite the alt text to describe the new image.",
+        "Every current image is shown below. The editorial set now uses Ghana-focused media from Wikimedia Commons under CC0, public-domain, CC BY or CC BY-SA terms. The exact live source links are stored in <font name='CourierNew'>app/data/imageCredits.ts</font> and displayed at <font name='CourierNew'>/image-credits</font>. When replacing an image, update the credit and alt text at the same time.",
         "ManualBody",
     ))
     story.append(callout(
@@ -486,6 +504,14 @@ def add_asset_catalog(story: list[Flowable]) -> None:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
         ]))
         story.append(KeepTogether([card, Spacer(1, 3 * mm)]))
+
+    story.append(PageBreak())
+    story += section("Open image license register", "Visual assets")
+    story.append(P(
+        "This table is the compact owner reference. The website credits page contains clickable source and license URLs. CC BY and CC BY-SA images require attribution; keep the public credits page whenever those files are used.",
+        "ManualBody",
+    ))
+    story.append(data_table(["Local file", "Creator", "License", "Commons source title"], image_licenses, [31, 42, 28, 66]))
 
 
 def screenshot_page(story: list[Flowable], title: str, filename: str, note: str, label: str = "Page screenshot") -> None:
@@ -560,8 +586,8 @@ def build_story() -> list[Flowable]:
     story.append(PageBreak())
     story += section("Priority replacement checklist", "What must change")
     priorities = [
-        ("P0 - before any public launch", "Replace or verify all three Daily Brief headlines; verify ownership of the supplied social profiles; add Privacy Policy and Terms; configure Resend; replace all article preview bodies; confirm photo licenses and consent."),
-        ("P1 - editorial launch quality", "Replace hero, Money, Skills, Life, Opportunity, cash and Voices imagery; use real author names; confirm read times; replace the generated social preview if a campaign asset exists."),
+        ("P0 - before any public launch", "Replace or verify all three Daily Brief headlines; verify ownership of the supplied social profiles; add Privacy Policy and Terms; configure Resend; replace all article preview bodies; retain the public image-credit page while open-license media is used."),
+        ("P1 - editorial launch quality", "Review every Ghana-focused image for story fit and responsive crop; replace the placeholder Voices quote and identity; use real author names; confirm read times; replace the generated social preview if a campaign asset exists."),
         ("P2 - operational maturity", "Connect a CMS; add search indexing; add category pagination; add analytics; add newsletter subscriber storage; add a working Voices carousel."),
         ("P3 - ongoing edition work", "Increment Issue 001; refresh lead story; refresh Quick Reads; update daily news; check opportunities; review metadata and image crops."),
     ]
@@ -581,6 +607,7 @@ def build_story() -> list[Flowable]:
             ("/skills", "Skills Manual category", "Shared template; limited curated story set"),
             ("/life", "Life Manual category", "Shared template; currently falls back to generic stories"),
             ("/opportunity", "Opportunity Manual category", "Shared template; currently falls back to generic stories"),
+            ("/image-credits", "Open editorial image attribution", "Complete creator, source and license register"),
             ("/article/[slug]", "Article route", "Metadata-aware preview only; full body not implemented"),
             ("/api/waitlist", "Newsletter submission endpoint", "Requires Resend environment configuration"),
         ], [48, 55, 64],
@@ -829,6 +856,7 @@ def build_story() -> list[Flowable]:
 
     screenshot_page(story, "Search overlay", "search-overlay-desktop.jpg", "Desktop search state with popular topic routes. Search currently filters only this preset topic list.", "Interactive state")
     screenshot_page(story, "Mobile navigation drawer", "mobile-menu.jpg", "Mobile drawer with all five category links, the Morning Manual call to action, official contact email and five SVG social links. Captured at 390 x 844.", "Interactive state")
+    screenshot_page(story, "Ghana image credits", "image-credits.jpg", "Public attribution page for all twelve Ghana-focused editorial images, including creator, Commons source and reuse license links.", "Page screenshot")
 
     category_notes = {
         "work": "Work category using the shared category template and available Work stories.",
@@ -862,7 +890,7 @@ def build_story() -> list[Flowable]:
     story.append(Spacer(1, 5 * mm))
     final_items = [
         "I know that app/data/homepage.ts is the primary homepage content source.",
-        "I have reviewed every item marked CRITICAL or HIGH in the image catalog.",
+        "I have reviewed every Ghana-focused image, its story fit, its open license and its visible credit.",
         "I understand that all eight known article routes still use preview bodies.",
         "I will verify daily news, financial claims, jobs and opportunities before publication.",
         "I will keep the supplied official social URLs current and create the remaining legal pages.",

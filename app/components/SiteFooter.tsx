@@ -6,12 +6,13 @@ import { Icon } from "./Icon";
 const columns = [
   { title: "Explore", links: ["Work Manual", "Money Manual", "Skills Manual", "Life Manual", "Opportunity Manual"] },
   { title: "About", links: ["About Us", "Our Mission", "Editorial Principles", "Write for Us", "Contributors"] },
-  { title: "Resources", links: ["The Manual", "Opportunities", "Newsletter", "Podcast", "Videos"] },
+  { title: "Resources", links: ["The Manual", "Opportunities", "Newsletter", "Podcast", "Videos", "Image Credits"] },
   { title: "Support", links: ["Contact Us", "Advertise", "Partner With Us", "Privacy Policy", "Terms of Use"] },
 ];
 
 function slugFor(label: string) {
   if (label === "Contact Us") return `mailto:${contactEmail}`;
+  if (label === "Image Credits") return "/image-credits";
   const normalized = label.toLowerCase().replace(" manual", "");
   if (["work", "money", "skills", "life", "opportunity"].includes(normalized)) return `/${normalized}`;
   return `/article/${label.toLowerCase().replaceAll(" ", "-")}`;

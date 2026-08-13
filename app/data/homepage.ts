@@ -41,7 +41,7 @@ export const heroArticle: Article = {
   excerpt:
     "The real world looks nothing like the classroom. Here’s what actually changes — and how to prepare for it.",
   image: "/editorial/student.jpg",
-  imageAlt: "A young African graduate working on a laptop",
+  imageAlt: "Young Ghanaian adults working together on laptops at a University of Ghana workshop",
   readTime: "8 min read",
   featured: true,
 };
@@ -53,7 +53,7 @@ export const secondaryStories: Article[] = [
     title: "Your Salary Isn’t Your Net Worth.",
     category: "Money",
     image: "/editorial/money.jpg",
-    imageAlt: "Coins and a growing plant symbolising long-term wealth",
+    imageAlt: "A Ghanaian market trader serving customers at her stall in northern Ghana",
     readTime: "5 min read",
   },
   {
@@ -62,7 +62,7 @@ export const secondaryStories: Article[] = [
     title: "The Skills That Will Pay You in 2030.",
     category: "Skills",
     image: "/editorial/skills.jpg",
-    imageAlt: "Code displayed on a laptop in a developer workspace",
+    imageAlt: "Young Ghanaian women participating in a laptop-based technology workshop",
     readTime: "6 min read",
   },
 ];
@@ -111,7 +111,7 @@ export const manuals: Manual[] = [
     slug: "work",
     description: "Careers, workplace culture and growth.",
     image: "/editorial/work.jpg",
-    imageAlt: "Young professionals collaborating in a bright office",
+    imageAlt: "Ghanaian professionals and students collaborating around laptops at a workshop",
     color: "#f15a24",
   },
   {
@@ -119,7 +119,7 @@ export const manuals: Manual[] = [
     slug: "money",
     description: "Make, manage and multiply your money.",
     image: "/editorial/money.jpg",
-    imageAlt: "A plant growing beside neatly stacked coins",
+    imageAlt: "A Ghanaian market trader serving customers at her stall in northern Ghana",
     color: "#3d652f",
   },
   {
@@ -127,7 +127,7 @@ export const manuals: Manual[] = [
     slug: "skills",
     description: "The skills that build value and freedom.",
     image: "/editorial/skills.jpg",
-    imageAlt: "A laptop used for software development",
+    imageAlt: "Young Ghanaian women participating in a laptop-based technology workshop",
     color: "#1b4b78",
   },
   {
@@ -135,7 +135,7 @@ export const manuals: Manual[] = [
     slug: "life",
     description: "Mindset, health, relationships and becoming your best.",
     image: "/editorial/life.jpg",
-    imageAlt: "A calm desert landscape at sunset",
+    imageAlt: "A Ghanaian environmental initiative team gathered around a work table",
     color: "#8063a8",
   },
   {
@@ -143,7 +143,7 @@ export const manuals: Manual[] = [
     slug: "opportunity",
     description: "Jobs, scholarships, fellowships and more.",
     image: "/editorial/opportunity.jpg",
-    imageAlt: "An open doorway leading to a bright view",
+    imageAlt: "A diverse group of young Ghanaian adults outside the University of Ghana",
     color: "#d59620",
   },
 ];
@@ -155,7 +155,7 @@ export const quickReads: Article[] = [
     title: "5 things nobody tells you about your first job.",
     category: "Work",
     image: "/editorial/student.jpg",
-    imageAlt: "A student using a laptop",
+    imageAlt: "Young Ghanaian adults working together on laptops at a University of Ghana workshop",
     readTime: "3 min read",
   },
   {
@@ -164,7 +164,7 @@ export const quickReads: Article[] = [
     title: "Your first 1000 GHS is different.",
     category: "Money",
     image: "/editorial/cash.jpg",
-    imageAlt: "Banknotes held in one hand",
+    imageAlt: "Front and back of a Ghana 50 cedi banknote",
     readTime: "4 min read",
   },
   {
@@ -173,7 +173,7 @@ export const quickReads: Article[] = [
     title: "7 high-income skills you can learn in 6 months.",
     category: "Skills",
     image: "/editorial/desk.jpg",
-    imageAlt: "A notebook and pen on a tidy work desk",
+    imageAlt: "Ghanaian students learning together with a laptop in a classroom",
     readTime: "5 min read",
   },
   {
@@ -182,7 +182,7 @@ export const quickReads: Article[] = [
     title: "Corporate phrases (and what they mean).",
     category: "Work",
     image: "/editorial/office.jpg",
-    imageAlt: "A modern office prepared for a meeting",
+    imageAlt: "Attendees preparing for a Young Entrepreneurs Summit in Ghana",
     readTime: "3 min read",
   },
   {
@@ -191,7 +191,7 @@ export const quickReads: Article[] = [
     title: "Why most side hustles never make money.",
     category: "Money",
     image: "/editorial/buildings.jpg",
-    imageAlt: "City office buildings viewed from below",
+    imageAlt: "People walking past small businesses on a busy market street in Accra",
     readTime: "4 min read",
   },
 ];
@@ -215,4 +215,3 @@ export const popularTopics = [
 ];
 
 export const categoryNames = ["work", "money", "skills", "life", "opportunity"] as const;
-

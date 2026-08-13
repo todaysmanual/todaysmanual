@@ -163,7 +163,7 @@ The existing logo files remain unchanged:
 - `public/todaysmanual1.png`
 - `public/todaysmanuallogo.png`
 
-Editorial images are stored locally in `public/editorial/` so components do not contain scattered remote image URLs. Temporary editorial photography was downloaded from Unsplash image delivery URLs and is intentionally isolated for easy CMS replacement:
+Editorial images are stored locally in `public/editorial/` so components do not depend on remote image delivery. The complete set now uses Ghana-focused media from Wikimedia Commons. Every image is CC0, public domain, CC BY or CC BY-SA, and every creator, source page, license and exact alt description is recorded in `app/data/imageCredits.ts` and displayed publicly at `/image-credits`:
 
 - `student.jpg`
 - `money.jpg`
@@ -178,7 +178,9 @@ Editorial images are stored locally in `public/editorial/` so components do not 
 - `interview.jpg`
 - `voice.jpg`
 
-The direct source IDs used were `photo-1694175271713-a6e2cc378980`, `photo-1579621970563-ebec7560ff3e`, `photo-1515879218367-8466d910aaa4`, `photo-1573164574397-dd250bc8a598`, `photo-1500534314209-a25ddb2bd429`, `photo-1519999482648-25049ddd37b1`, `photo-1561414927-6d86591d0c4f`, `photo-1455390582262-044cdead277a`, `photo-1497366754035-f200968a6e72`, `photo-1486406146926-c627a92ad1ab`, `photo-1521791055366-0d553872125f` and `photo-1519085360753-af0119f7cbe7`.
+The current set depicts University of Ghana workshop participants, Ghanaian students using laptops, a northern Ghana market trader, a Ghana environmental initiative, a Young Entrepreneurs Summit, a Ghana 50 cedi banknote, an Accra market street and Ghanaian broadcaster Anita Erskine in an interview. The files are delivered locally under standardized filenames, while the unmodified Commons source pages remain linked from the credits page. The cedi source was converted from PNG to JPEG for consistent card delivery; responsive crops are applied by CSS in the browser.
+
+Open-license attribution is part of the product, not only the repository documentation. The footer includes an Image Credits destination, and the credits route provides visible source and license links without suggesting that any creator or pictured person endorses Today’s Manual.
 
 ## Social preview
 

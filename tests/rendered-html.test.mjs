@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", { headers: { accept: "text/html" } }),
+    new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },
   );
@@ -39,10 +39,24 @@ test("server-renders the complete Today's Manual editorial homepage", async () =
   assert.match(html, /tiktok\.com\/@todaysmanualofficial/);
   assert.match(html, /linkedin\.com\/in\/todaysmanual-undefined-538a70429/);
   assert.match(html, /youtube\.com\/@todaysmanual/);
+  assert.match(html, /href="\/image-credits"/);
   assert.doesNotMatch(html, /href="https:\/\/x\.com"/);
   assert.match(html, /href="https:\/\/todaysmanual\.com\/todaysmanuallogo\.png"/);
   assert.match(html, /src="\/todaysmanual1\.png"/);
   assert.doesNotMatch(html, /COMING SOON|codex-preview|Your site is taking shape/);
+});
+
+test("serves the Ghana-focused open image credit register", async () => {
+  const response = await render("/image-credits");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Ghana image credits/);
+  assert.match(html, /Zapsmedia25/);
+  assert.match(html, /Bank of Ghana/);
+  assert.match(html, /CC BY-SA 4\.0/);
+  assert.match(html, /creativecommons\.org/);
+  assert.match(html, /commons\.wikimedia\.org/);
 });
 
 test("includes responsive, accessible, motion-aware production styling", async () => {
@@ -65,5 +79,6 @@ test("includes responsive, accessible, motion-aware production styling", async (
     access(new URL("../public/todaysmanual1.png", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
     access(new URL("../public/editorial/student.jpg", import.meta.url)),
+    access(new URL("../app/data/imageCredits.ts", import.meta.url)),
   ]);
 });

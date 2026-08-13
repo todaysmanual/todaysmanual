@@ -8,7 +8,7 @@ const baseUrl = process.env.SITE_URL || "http://localhost:3000";
 await mkdir(outputDir, { recursive: true });
 
 const targets = await fetch(`http://127.0.0.1:${debugPort}/json`).then((response) => response.json());
-const pageTarget = targets.find((target) => target.type === "page");
+const pageTarget = targets.find((target) => target.type === "page" && !target.url.startsWith("chrome://"));
 if (!pageTarget?.webSocketDebuggerUrl) throw new Error("No Chrome page target is available.");
 
 const socket = new WebSocket(pageTarget.webSocketDebuggerUrl);
@@ -59,11 +59,14 @@ async function navigate(route) {
   await send("Page.navigate", { url: `${baseUrl}${route}` });
   await wait(900);
   await send("Runtime.evaluate", {
-    expression: `Promise.all([
-      document.fonts ? document.fonts.ready : Promise.resolve(),
-      ...Array.from(document.images).map((image) => image.complete
-        ? Promise.resolve()
-        : new Promise((resolve) => { image.addEventListener('load', resolve, {once:true}); image.addEventListener('error', resolve, {once:true}); }))
+    expression: `Promise.race([
+      Promise.all([
+        document.fonts ? document.fonts.ready : Promise.resolve(),
+        ...Array.from(document.images).map((image) => image.complete
+          ? Promise.resolve()
+          : new Promise((resolve) => { image.addEventListener('load', resolve, {once:true}); image.addEventListener('error', resolve, {once:true}); }))
+      ]),
+      new Promise((resolve) => setTimeout(resolve, 3000))
     ])`,
     awaitPromise: true,
     returnByValue: true,
@@ -123,6 +126,9 @@ for (const article of articleRoutes) {
 
 await navigate("/article/replace-this-placeholder");
 await capture("article-placeholder-template.png");
+
+await navigate("/image-credits");
+await capture("image-credits.png");
 
 await setViewport(390, 844, true);
 await navigate("/");

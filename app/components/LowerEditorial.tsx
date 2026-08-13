@@ -26,7 +26,7 @@ export function LowerEditorial() {
           </div>
           <figure>
             <span className="quote-mark" aria-hidden="true">“</span>
-            <img src="/editorial/voice.jpg" alt="Portrait of a young professional" loading="lazy" width="900" height="1350" />
+            <img src="/editorial/voice.jpg" alt="A young Ghanaian man speaking during a University of Ghana workshop" loading="lazy" width="900" height="1350" />
             <blockquote>I thought getting a degree was enough.</blockquote>
             <figcaption>— Kofi, 26, Accra</figcaption>
           </figure>
@@ -44,7 +44,7 @@ export function LowerEditorial() {
               <small>Everything you need before, during and after an interview.</small>
               <span>12 min read <Icon name="arrow" size={15} /></span>
             </span>
-            <img src="/editorial/interview.jpg" alt="Professionals preparing for an interview" loading="lazy" width="1200" height="801" />
+            <img src="/editorial/interview.jpg" alt="Ghanaian broadcaster Anita Erskine taking part in a television interview" loading="lazy" width="1200" height="801" />
           </Link>
         </section>
       </div>
