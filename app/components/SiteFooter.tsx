@@ -1,5 +1,16 @@
+import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
 import { Icon } from "./Icon";
+
+const contactEmail = "todaysmanual@gmail.com";
+
+const socialLinks = [
+  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61593445161962", icon: "facebook" as const },
+  { label: "Instagram", href: "https://www.instagram.com/todaysmanual/", icon: "instagram" as const },
+  { label: "TikTok", href: "https://www.tiktok.com/@todaysmanualofficial", icon: "tiktok" as const },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/todaysmanual-undefined-538a70429/", icon: "linkedin" as const },
+  { label: "YouTube", href: "https://www.youtube.com/@todaysmanual", icon: "play" as const },
+];
 
 const columns = [
   { title: "Explore", links: ["Work Manual", "Money Manual", "Skills Manual", "Life Manual", "Opportunity Manual"] },
@@ -9,6 +20,7 @@ const columns = [
 ];
 
 function slugFor(label: string) {
+  if (label === "Contact Us") return `mailto:${contactEmail}`;
   const normalized = label.toLowerCase().replace(" manual", "");
   if (["work", "money", "skills", "life", "opportunity"].includes(normalized)) return `/${normalized}`;
   return `/article/${label.toLowerCase().replaceAll(" ", "-")}`;
@@ -21,12 +33,13 @@ export function SiteFooter({ year }: { year: number }) {
         <div className="footer-brand">
           <Link href="/" aria-label="Today’s Manual home"><BrandLogo /></Link>
           <p>A guide for the generation building tomorrow. Practical knowledge, honest conversations and useful direction for navigating careers, business and life in modern Africa.</p>
-          <div className="social-links">
-            <a href="https://www.instagram.com" aria-label="Instagram"><Icon name="instagram" /></a>
-            <a href="https://x.com" aria-label="X"><Icon name="x" /></a>
-            <a href="https://www.tiktok.com" aria-label="TikTok"><Icon name="tiktok" /></a>
-            <a href="https://www.linkedin.com" aria-label="LinkedIn"><Icon name="linkedin" /></a>
-            <a href="https://www.youtube.com" aria-label="YouTube"><Icon name="play" /></a>
+          <a className="footer-email" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          <div className="social-links" aria-label="Today’s Manual social media">
+            {socialLinks.map((social) => (
+              <a href={social.href} aria-label={`Today’s Manual on ${social.label}`} target="_blank" rel="noreferrer" key={social.label}>
+                <Icon name={social.icon} />
+              </a>
+            ))}
           </div>
         </div>
         {columns.map((column) => (
@@ -44,4 +57,3 @@ export function SiteFooter({ year }: { year: number }) {
     </footer>
   );
 }
-import Link from "next/link";

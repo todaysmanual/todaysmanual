@@ -25,7 +25,18 @@ test("server-renders the complete Today's Manual editorial homepage", async () =
   assert.match(html, /Where are you/);
   assert.match(html, /The five manuals/i);
   assert.match(html, /The Morning Manual/);
+  assert.match(html, /World clocks/);
+  assert.match(html, /ACC/);
+  assert.match(html, /LDN/);
+  assert.match(html, /NYC/);
   assert.match(html, /Made in Africa/);
+  assert.match(html, /mailto:todaysmanual@gmail\.com/);
+  assert.match(html, /facebook\.com\/profile\.php\?id=61593445161962/);
+  assert.match(html, /instagram\.com\/todaysmanual/);
+  assert.match(html, /tiktok\.com\/@todaysmanualofficial/);
+  assert.match(html, /linkedin\.com\/in\/todaysmanual-undefined-538a70429/);
+  assert.match(html, /youtube\.com\/@todaysmanual/);
+  assert.doesNotMatch(html, /href="https:\/\/x\.com"/);
   assert.match(html, /href="https:\/\/todaysmanual\.com\/todaysmanuallogo\.png"/);
   assert.match(html, /src="\/todaysmanual1\.png"/);
   assert.doesNotMatch(html, /COMING SOON|codex-preview|Your site is taking shape/);

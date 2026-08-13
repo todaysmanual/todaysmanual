@@ -8,11 +8,32 @@ import { Icon } from "./Icon";
 
 const navItems = ["Work", "Money", "Skills", "Life", "Opportunity"];
 const newsTopics = ["AI", "Careers", "Money", "Ghana", "Business"];
+const timeZones = [
+  { label: "ACC", zone: "Africa/Accra" },
+  { label: "LDN", zone: "Europe/London" },
+  { label: "NYC", zone: "America/New_York" },
+] as const;
 
-export function Header({ issueDate }: { issueDate: string }) {
+function getWorldTimes() {
+  const now = new Date();
+  return Object.fromEntries(
+    timeZones.map(({ label, zone }) => [
+      label,
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: zone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }).format(now),
+    ]),
+  );
+}
+
+export function Header({ issueDate, initialWorldTimes }: { issueDate: string; initialWorldTimes: Record<string, string> }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [worldTimes, setWorldTimes] = useState<Record<string, string>>(initialWorldTimes);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const filteredTopics = useMemo(
@@ -36,6 +57,11 @@ export function Header({ issueDate }: { issueDate: string }) {
     };
   }, [searchOpen, menuOpen]);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => setWorldTimes(getWorldTimes()), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <>
       <header className="site-header">
@@ -44,7 +70,17 @@ export function Header({ issueDate }: { issueDate: string }) {
             <strong>Today in the Manual</strong>
             {newsTopics.map((topic) => <span key={topic}>{topic}</span>)}
           </div>
-          <p>Issue 001 <i /> {issueDate}</p>
+          <div className="info-bar__right">
+            <div className="world-clocks" aria-label="World clocks">
+              <Icon name="clock" size={13} />
+              {timeZones.map(({ label, zone }) => (
+                <time key={label} aria-label={`${label} time zone, ${worldTimes[label] ?? "loading"}`} data-zone={zone}>
+                  <span>{label}</span> {worldTimes[label] ?? "--:--"}
+                </time>
+              ))}
+            </div>
+            <p className="info-bar__issue"><span>Issue 001</span> <i /> <time>{issueDate}</time></p>
+          </div>
         </div>
         <div className="main-nav page-shell">
           <Link className="main-nav__brand" href="/" aria-label="Today’s Manual home"><BrandLogo /></Link>

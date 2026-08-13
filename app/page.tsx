@@ -15,10 +15,25 @@ export default function Home() {
     year: "numeric",
     timeZone: "Africa/Accra",
   }).format(now);
+  const initialWorldTimes = Object.fromEntries(
+    [
+      ["ACC", "Africa/Accra"],
+      ["LDN", "Europe/London"],
+      ["NYC", "America/New_York"],
+    ].map(([label, timeZone]) => [
+      label,
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }).format(now),
+    ]),
+  );
 
   return (
     <>
-      <Header issueDate={issueDate} />
+      <Header issueDate={issueDate} initialWorldTimes={initialWorldTimes} />
       <main>
         <HeroStory />
         <StartHere />

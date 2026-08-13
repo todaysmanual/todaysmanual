@@ -27,6 +27,7 @@ The layout uses one capped page shell so desktop whitespace stays controlled on 
 
 - A narrow issue bar with “Today in the Manual,” AI, Careers, Money, Ghana and Business topics
 - A dynamic Accra-time date and Issue 001 label
+- Live world clocks for Accra, London and New York, refreshed every 30 seconds with tabular figures
 - The existing Today’s Manual logo asset
 - Desktop links for Work, Money, Skills, Life and Opportunity
 - Search, The Manual and Subscribe controls
@@ -35,6 +36,8 @@ The layout uses one capped page shell so desktop whitespace stays controlled on 
 - Escape-key support for closing the mobile menu and search
 - Page scroll locking while either overlay is open
 - Automatic focus on the search input when search opens
+
+The world-clock row uses `Intl.DateTimeFormat` with explicit IANA time zones (`Africa/Accra`, `Europe/London` and `America/New_York`), so daylight-saving changes are handled by the browser rather than hardcoded offsets. Tablet and mobile layouts retain Accra while progressively hiding the secondary clocks and long issue date to prevent crowding.
 
 The search control opens a full-screen editorial search overlay. It includes the requested question, a large search field and the requested popular topics. Topic chips are filtered on the client as the user types. Every result leads to the reusable article route, where a graceful preview is shown if a full article does not exist yet.
 
@@ -85,7 +88,8 @@ At mobile widths, CSS `display: contents` is used only for composition: category
 
 - The existing Today’s Manual wordmark, rendered in white through CSS
 - The complete publication description
-- SVG icons for Instagram, X, TikTok, LinkedIn and YouTube
+- Official Facebook, Instagram, TikTok, LinkedIn and YouTube profile links with SVG icons
+- A visible `todaysmanual@gmail.com` contact link and `mailto:` destination for Contact Us
 - Explore, About, Resources and Support columns
 - Current-year copyright text
 - “Made in Africa for the world we live in.” and the orange square accent
@@ -117,7 +121,7 @@ No emoji are used anywhere in the interface. `app/components/Icon.tsx` contains 
 - Arrows and dropdowns
 - School, briefcase, growth, idea and compass states
 - Newsletter mail
-- Instagram, X, TikTok, LinkedIn and YouTube
+- Facebook, Instagram, TikTok, LinkedIn and YouTube
 
 All decorative SVG elements are marked as hidden from assistive technology. All icon-only buttons and links have readable accessible labels.
 
@@ -211,4 +215,3 @@ Semantic landmarks include header, nav, main, article, section and footer. Image
 - Automated tests confirm the main homepage sections, logo assets, local editorial image, Open Graph image, responsive breakpoints, reduced-motion handling, search styling and removal of the old coming-soon content
 
 The in-app browser connection was unavailable during the final run, so screenshot-based browser comparison and live click automation could not be completed in that environment. Functional overlay logic, responsive recomposition and interaction states were verified through the implementation, build, server rendering and route checks. No browser-only result is claimed in this document.
-

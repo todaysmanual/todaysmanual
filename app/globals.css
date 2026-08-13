@@ -45,6 +45,11 @@ img { display: block; max-width: 100%; }
 .info-bar__topics strong::before { content: ""; position: absolute; top: 50%; left: 0; width: 5px; height: 5px; background: var(--orange); transform: translateY(-50%); }
 .info-bar__topics span { position: relative; padding-left: 16px; color: rgba(7, 26, 56, .78); }
 .info-bar__topics span::before { content: ""; position: absolute; top: 50%; left: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--orange); transform: translateY(-50%); }
+.info-bar__right { display: flex; align-items: center; gap: 1.1rem; }
+.world-clocks { display: flex; align-items: center; gap: .8rem; color: rgba(7, 26, 56, .68); }
+.world-clocks svg { color: var(--orange); }
+.world-clocks time { display: flex; align-items: baseline; gap: .28rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.world-clocks time span { color: var(--navy); font-weight: 760; }
 .info-bar p { display: flex; margin: 0; align-items: center; gap: .7rem; color: var(--muted); text-transform: none; }
 .info-bar p i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
 .main-nav { display: grid; min-height: 78px; grid-template-columns: 260px 1fr auto; align-items: center; border-bottom: 1px solid var(--line); }
@@ -214,6 +219,8 @@ img { display: block; max-width: 100%; }
 .site-footer__grid { display: grid; grid-template-columns: minmax(230px, 1.5fr) repeat(4, minmax(105px, .7fr)) minmax(150px, .8fr); gap: 34px; }
 .footer-brand > a { display: block; width: 190px; filter: brightness(0) invert(1); }
 .footer-brand p { max-width: 255px; margin: 19px 0; font-size: .64rem; line-height: 1.55; }
+.footer-email { display: inline-block; margin: -7px 0 17px; color: #fff; font-size: .63rem; font-weight: 700; text-decoration: underline; text-decoration-color: var(--orange); text-underline-offset: 4px; transition: color .2s ease; }
+.footer-email:hover { color: var(--orange); }
 .social-links { display: flex; gap: 14px; }
 .social-links a { transition: color .2s ease; }
 .social-links a:hover { color: var(--orange); }
@@ -274,6 +281,7 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 900px) {
   .info-bar__topics span:nth-last-child(-n+2) { display: none; }
+  .world-clocks time:nth-of-type(n+2) { display: none; }
   .main-nav { grid-template-columns: 1fr auto; }
   .main-nav__links { display: none; }
   .main-nav__actions > * { border-left: 0; }
@@ -315,6 +323,10 @@ img { display: block; max-width: 100%; }
   .info-bar__topics strong { font-size: .48rem; }
   .info-bar__topics span { display: none; }
   .info-bar p { font-size: .48rem; }
+  .info-bar__right { gap: .65rem; }
+  .world-clocks { gap: .35rem; font-size: .48rem; }
+  .world-clocks svg { display: none; }
+  .info-bar__issue i, .info-bar__issue > time { display: none; }
   .main-nav { min-height: 64px; }
   .main-nav__brand { width: 165px; }
   .main-nav__actions .icon-button { width: 40px; }
