@@ -148,7 +148,7 @@ All decorative SVG elements are marked as hidden from assistive technology. All 
 
 The stylesheet includes specific structural changes for the requested viewport range:
 
-- 1920px and wider: wider capped publication shell, larger hero image and more generous card heights
+- 1920px and wider: wider capped publication shell, larger hero image and more generous card heights; the lead headline is capped at 4rem so its copy and action cannot overflow into Start Here
 - 1280px–1440px: full three-column hero and five-column editorial card rows
 - 1024px: compact navigation spacing and adjusted hero proportions
 - 768px: two-column hero with secondary stories below; horizontal Start Here, Manuals and Quick Reads rails; two-column lower editorial grid

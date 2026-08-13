@@ -433,7 +433,7 @@ img { display: block; max-width: 100%; }
   .page-shell { width: min(100% - 10rem, 1680px); }
   .hero-story { height: 590px; min-height: 0; grid-template-columns: .95fr 1.3fr .84fr; }
   .hero-story__image { min-height: 0; }
-  .hero-story h1 { font-size: 4.8rem; }
+  .hero-story h1 { font-size: 4rem; }
   .start-here__grid, .manuals-section__grid, .quick-section__grid { grid-template-columns: 290px 1fr; }
   .start-card { min-height: 230px; }
   .manual-card { min-height: 370px; }
