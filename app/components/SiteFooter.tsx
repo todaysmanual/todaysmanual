@@ -1,16 +1,7 @@
 import Link from "next/link";
+import { contactEmail, socialLinks } from "../data/contact";
 import { BrandLogo } from "./BrandLogo";
 import { Icon } from "./Icon";
-
-const contactEmail = "todaysmanual@gmail.com";
-
-const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61593445161962", icon: "facebook" as const },
-  { label: "Instagram", href: "https://www.instagram.com/todaysmanual/", icon: "instagram" as const },
-  { label: "TikTok", href: "https://www.tiktok.com/@todaysmanualofficial", icon: "tiktok" as const },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/todaysmanual-undefined-538a70429/", icon: "linkedin" as const },
-  { label: "YouTube", href: "https://www.youtube.com/@todaysmanual", icon: "play" as const },
-];
 
 const columns = [
   { title: "Explore", links: ["Work Manual", "Money Manual", "Skills Manual", "Life Manual", "Opportunity Manual"] },

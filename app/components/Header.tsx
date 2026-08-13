@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { contactEmail, socialLinks } from "../data/contact";
 import { popularTopics } from "../data/homepage";
 import { BrandLogo } from "./BrandLogo";
 import { Icon } from "./Icon";
@@ -71,6 +72,19 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
             {newsTopics.map((topic) => <span key={topic}>{topic}</span>)}
           </div>
           <div className="info-bar__right">
+            <div className="header-contact">
+              <a className="header-contact__email" href={`mailto:${contactEmail}`} aria-label={`Email Today’s Manual at ${contactEmail}`}>
+                <Icon name="mail" size={13} />
+                <span>{contactEmail}</span>
+              </a>
+              <div className="header-socials" aria-label="Today’s Manual header social media">
+                {socialLinks.map((social) => (
+                  <a href={social.href} aria-label={`Today’s Manual on ${social.label}`} target="_blank" rel="noreferrer" key={social.label}>
+                    <Icon name={social.icon} size={13} />
+                  </a>
+                ))}
+              </div>
+            </div>
             <div className="world-clocks" aria-label="World clocks">
               <Icon name="clock" size={13} />
               {timeZones.map(({ label, zone }) => (
@@ -89,6 +103,7 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
           </nav>
           <div className="main-nav__actions">
             <button className="icon-button" type="button" onClick={() => setSearchOpen(true)} aria-label="Open search"><Icon name="search" size={22} /></button>
+            <a className="icon-button mobile-email-button" href={`mailto:${contactEmail}`} aria-label={`Email Today’s Manual at ${contactEmail}`}><Icon name="mail" size={20} /></a>
             <Link className="manual-link" href="#the-manual">The Manual <Icon name="chevron" size={16} /></Link>
             <Link className="subscribe-button" href="#newsletter">Subscribe</Link>
             <button className="icon-button menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Icon name="menu" size={24} /></button>
@@ -109,6 +124,20 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
             ))}
           </nav>
           <Link className="mobile-drawer__subscribe" href="#newsletter" onClick={() => setMenuOpen(false)}>Get the Morning Manual <Icon name="arrow" /></Link>
+          <div className="mobile-drawer__contact">
+            <p className="eyebrow">Contact and follow</p>
+            <a className="mobile-drawer__email" href={`mailto:${contactEmail}`}>
+              <Icon name="mail" size={18} />
+              <span>{contactEmail}</span>
+            </a>
+            <div className="mobile-drawer__socials" aria-label="Today’s Manual mobile social media">
+              {socialLinks.map((social) => (
+                <a href={social.href} aria-label={`Today’s Manual on ${social.label}`} target="_blank" rel="noreferrer" key={social.label}>
+                  <Icon name={social.icon} size={18} />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

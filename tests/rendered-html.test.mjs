@@ -26,6 +26,9 @@ test("server-renders the complete Today's Manual editorial homepage", async () =
   assert.match(html, /The five manuals/i);
   assert.match(html, /The Morning Manual/);
   assert.match(html, /World clocks/);
+  assert.match(html, /header social media/);
+  assert.match(html, /mobile social media/);
+  assert.match(html, /Email Today’s Manual at todaysmanual@gmail\.com/);
   assert.match(html, /ACC/);
   assert.match(html, /LDN/);
   assert.match(html, /NYC/);
@@ -53,6 +56,8 @@ test("includes responsive, accessible, motion-aware production styling", async (
   assert.match(css, /@media \(max-width:\s*380px\)/);
   assert.match(css, /overflow-x:\s*hidden/);
   assert.match(css, /\.search-overlay/);
+  assert.match(css, /\.header-socials/);
+  assert.match(css, /\.mobile-email-button/);
   assert.match(packageJson, /"next"/);
 
   await Promise.all([

@@ -28,16 +28,19 @@ The layout uses one capped page shell so desktop whitespace stays controlled on 
 - A narrow issue bar with “Today in the Manual,” AI, Careers, Money, Ghana and Business topics
 - A dynamic Accra-time date and Issue 001 label
 - Live world clocks for Accra, London and New York, refreshed every 30 seconds with tabular figures
+- The official `todaysmanual@gmail.com` address and Facebook, Instagram, TikTok, LinkedIn and YouTube SVG links in the desktop issue bar
 - The existing Today’s Manual logo asset
 - Desktop links for Work, Money, Skills, Life and Opportunity
 - Search, The Manual and Subscribe controls
 - A sticky header with a subtle backdrop blur
-- A mobile drawer with numbered category links and a Morning Manual call to action
+- A compact mobile email control plus a mobile drawer with numbered category links, a Morning Manual call to action, the official email and all five social channels
 - Escape-key support for closing the mobile menu and search
 - Page scroll locking while either overlay is open
 - Automatic focus on the search input when search opens
 
 The world-clock row uses `Intl.DateTimeFormat` with explicit IANA time zones (`Africa/Accra`, `Europe/London` and `America/New_York`), so daylight-saving changes are handled by the browser rather than hardcoded offsets. Tablet and mobile layouts retain Accra while progressively hiding the secondary clocks and long issue date to prevent crowding.
+
+Official contact destinations are centralized in `app/data/contact.ts`. Both the header and footer read from that single source, which prevents a profile or email update from being applied in only one place. Every social mark is an inline SVG from `app/components/Icon.tsx`; no emoji or icon-font dependency is used.
 
 The search control opens a full-screen editorial search overlay. It includes the requested question, a large search field and the requested popular topics. Topic chips are filtered on the client as the user types. Every result leads to the reusable article route, where a graceful preview is shown if a full article does not exist yet.
 

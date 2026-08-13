@@ -46,6 +46,12 @@ img { display: block; max-width: 100%; }
 .info-bar__topics span { position: relative; padding-left: 16px; color: rgba(7, 26, 56, .78); }
 .info-bar__topics span::before { content: ""; position: absolute; top: 50%; left: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--orange); transform: translateY(-50%); }
 .info-bar__right { display: flex; align-items: center; gap: 1.1rem; }
+.header-contact { display: flex; align-items: center; gap: .65rem; }
+.header-contact__email { display: flex; align-items: center; gap: .35rem; text-transform: none; transition: color .2s ease; }
+.header-contact__email:hover { color: var(--orange); }
+.header-socials { display: flex; align-items: center; gap: .18rem; }
+.header-socials a { display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; transition: background .2s ease, color .2s ease; }
+.header-socials a:hover { background: var(--navy); color: #fff; }
 .world-clocks { display: flex; align-items: center; gap: .8rem; color: rgba(7, 26, 56, .68); }
 .world-clocks svg { color: var(--orange); }
 .world-clocks time { display: flex; align-items: baseline; gap: .28rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -65,6 +71,7 @@ img { display: block; max-width: 100%; }
 .subscribe-button { display: grid; min-width: 105px; min-height: 44px; margin-left: 14px; place-items: center; border-radius: 4px; background: var(--orange); color: #fff; font-size: .72rem; font-weight: 740; }
 .subscribe-button:hover { background: #e94b1b; }
 .menu-button { display: none; }
+.mobile-email-button { display: none; }
 
 /* Search and mobile navigation */
 .search-overlay { position: fixed; z-index: 100; inset: 0; visibility: hidden; overflow-y: auto; background: var(--paper); opacity: 0; transform: translateY(-20px); transition: opacity .28s ease, transform .28s ease, visibility .28s; }
@@ -92,6 +99,11 @@ img { display: block; max-width: 100%; }
 .mobile-drawer nav a { display: grid; min-height: 66px; grid-template-columns: 36px 1fr auto; align-items: center; border-bottom: 1px solid var(--line); font-size: 1.3rem; font-weight: 740; }
 .mobile-drawer nav a span { font-family: var(--font-geist-mono); font-size: .56rem; color: var(--orange); }
 .mobile-drawer__subscribe { display: flex; min-height: 54px; margin-top: 1.5rem; padding: 0 1rem; align-items: center; justify-content: space-between; background: var(--orange); color: #fff; font-size: .78rem; font-weight: 740; }
+.mobile-drawer__contact { margin-top: 1.6rem; padding-top: 1.35rem; border-top: 1px solid var(--line); }
+.mobile-drawer__email { display: flex; margin-top: .85rem; align-items: center; gap: .55rem; font-size: .78rem; font-weight: 680; }
+.mobile-drawer__email svg { color: var(--orange); }
+.mobile-drawer__socials { display: flex; margin-top: 1rem; gap: .55rem; }
+.mobile-drawer__socials a { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid var(--line); background: var(--white); }
 
 /* Hero */
 .hero-story { display: grid; min-height: 480px; padding-block: 38px 32px; grid-template-columns: minmax(320px, .98fr) minmax(390px, 1.25fr) minmax(280px, .86fr); gap: 16px; }
@@ -261,6 +273,8 @@ img { display: block; max-width: 100%; }
 .article-page__placeholder .dark-button { margin-top: 1rem; }
 
 @media (max-width: 1180px) {
+  .info-bar__topics span:nth-last-child(-n+3) { display: none; }
+  .header-contact__email span { display: none; }
   .main-nav { grid-template-columns: 220px 1fr auto; }
   .main-nav__brand { width: 185px; }
   .main-nav__links { gap: 1.6rem; }
@@ -282,10 +296,12 @@ img { display: block; max-width: 100%; }
 @media (max-width: 900px) {
   .info-bar__topics span:nth-last-child(-n+2) { display: none; }
   .world-clocks time:nth-of-type(n+2) { display: none; }
+  .header-contact { display: none; }
   .main-nav { grid-template-columns: 1fr auto; }
   .main-nav__links { display: none; }
   .main-nav__actions > * { border-left: 0; }
   .menu-button { display: grid; }
+  .mobile-email-button { display: grid; }
   .subscribe-button { display: none; }
   .hero-story { grid-template-columns: minmax(0, 1.15fr) minmax(250px, .85fr); }
   .hero-story__copy { min-height: 430px; }

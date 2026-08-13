@@ -351,6 +351,7 @@ assets = [
 homepage_copy = [
     ("Top issue bar", "Today in the Manual; AI; Careers; Money; Ghana; Business", "Topic list is editorial navigation copy", "app/components/Header.tsx"),
     ("World clocks", "ACC, LDN, NYC", "Live data; labels may be changed, zones are configured in code", "app/components/Header.tsx"),
+    ("Header contact", "todaysmanual@gmail.com; Facebook; Instagram; TikTok; LinkedIn; YouTube", "Official owner-supplied destinations; desktop issue bar plus mobile controls", "app/data/contact.ts and app/components/Header.tsx"),
     ("Issue", "Issue 001", "Hardcoded placeholder; increment for each edition", "app/components/Header.tsx"),
     ("Hero category", "Work / Career", "Replace when the lead story category changes", "app/components/HeroStory.tsx"),
     ("Hero headline", "Nobody Told Us What Happens After University.", "Lead story placeholder", "app/data/homepage.ts and app/components/HeroStory.tsx"),
@@ -427,7 +428,8 @@ placeholder_routes = [
 file_map = [
     ("app/page.tsx", "Homepage assembly, dynamic issue date and initial clock values", "Change section order or top-level data inputs"),
     ("app/data/homepage.ts", "Primary homepage content arrays and article metadata", "First place to update story titles, images, excerpts and read times"),
-    ("app/components/Header.tsx", "Issue bar, clocks, navigation, search and mobile drawer", "Change topics, clock zones, issue number and search topics behavior"),
+    ("app/data/contact.ts", "Single source for official email and social destinations", "Update this file when an official address or profile changes; header and footer update together"),
+    ("app/components/Header.tsx", "Issue bar, clocks, official contact links, navigation, search and mobile drawer", "Change topics, clock zones, issue number, contact presentation and search behavior"),
     ("app/components/HeroStory.tsx", "Hero layout and byline presentation", "Change fixed hero labels or component layout"),
     ("app/components/StartHere.tsx", "Start Here card presentation", "Change layout; content lives in data file"),
     ("app/components/Manuals.tsx", "Five Manuals presentation", "Change card layout; content lives in data file"),
@@ -626,8 +628,8 @@ def build_story() -> list[Flowable]:
         ("Newsletter promise", "Three useful things. Five minutes. Every morning.", "app/components/Newsletter.tsx", "Confirm schedule and value promise"),
         ("Newsletter destination", "todaysmanual@gmail.com notification", "app/api/waitlist/route.ts", "Replace with production list/CRM workflow"),
         ("Search", "Popular topics only; frontend filtering", "app/components/Header.tsx", "Connect real index before calling it site search"),
-        ("Footer social links", "Official Facebook, Instagram, TikTok, LinkedIn and YouTube profiles supplied by the owner", "app/components/SiteFooter.tsx", "Keep current; update only when an official handle changes"),
-        ("Footer contact email", "todaysmanual@gmail.com", "app/components/SiteFooter.tsx", "Official visible email and Contact Us mailto destination"),
+        ("Header and footer social links", "Official Facebook, Instagram, TikTok, LinkedIn and YouTube profiles supplied by the owner", "app/data/contact.ts", "Keep current; update this one shared file only when an official handle changes"),
+        ("Header and footer contact email", "todaysmanual@gmail.com", "app/data/contact.ts", "Official visible email, header mail controls and Contact Us mailto destination"),
         ("Footer internal links", "Most point to article preview placeholders", "app/components/SiteFooter.tsx", "Create actual About, policy, contact and resource pages"),
     ]
     story.append(data_table(["Item", "Current value", "Location", "Required action"], fixed_rows, [35, 50, 43, 39]))
@@ -816,7 +818,7 @@ def build_story() -> list[Flowable]:
             f"Mobile homepage detail {index} of 5",
             f"../crops/mobile-home-detail-{index}.jpg",
             [
-                "Mobile issue bar, logo/search/menu header, lead story and secondary stories.",
+                "Mobile issue bar, logo/search/email/menu header, lead story and secondary stories.",
                 "Start Here cards and the beginning of the Manuals rail.",
                 "Quick Reads and Daily Briefs sections.",
                 "Voices, The Manual and newsletter conversion area.",
@@ -826,7 +828,7 @@ def build_story() -> list[Flowable]:
         )
 
     screenshot_page(story, "Search overlay", "search-overlay-desktop.jpg", "Desktop search state with popular topic routes. Search currently filters only this preset topic list.", "Interactive state")
-    screenshot_page(story, "Mobile navigation drawer", "mobile-menu.jpg", "Mobile drawer with all five category links and the Morning Manual call to action. Captured at 390 x 844.", "Interactive state")
+    screenshot_page(story, "Mobile navigation drawer", "mobile-menu.jpg", "Mobile drawer with all five category links, the Morning Manual call to action, official contact email and five SVG social links. Captured at 390 x 844.", "Interactive state")
 
     category_notes = {
         "work": "Work category using the shared category template and available Work stories.",
