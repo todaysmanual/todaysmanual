@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { getContentBundle } from "@/lib/cms/content";
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
