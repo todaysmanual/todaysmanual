@@ -6,8 +6,15 @@ import { Newsletter } from "./components/Newsletter";
 import { QuickReads } from "./components/QuickReads";
 import { SiteFooter } from "./components/SiteFooter";
 import { StartHere } from "./components/StartHere";
+import { getContentBundle } from "@/lib/cms/content";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const { articles, categories, config } = await getContentBundle();
+  const heroArticle = articles.find((article) => article.slug === config.heroArticleSlug) ?? articles[0];
+  const secondaryStories = config.secondaryArticleSlugs.map((slug) => articles.find((article) => article.slug === slug)).filter((article) => article !== undefined);
+  const quickReads = config.quickReadSlugs.map((slug) => articles.find((article) => article.slug === slug)).filter((article) => article !== undefined);
   const now = new Date();
   const issueDate = new Intl.DateTimeFormat("en", {
     month: "long",
@@ -33,16 +40,22 @@ export default function Home() {
 
   return (
     <>
-      <Header issueDate={issueDate} initialWorldTimes={initialWorldTimes} />
+      <Header
+        issueDate={issueDate}
+        initialWorldTimes={initialWorldTimes}
+        config={config}
+        categories={categories}
+        articles={articles.map(({ slug, title, category_slug, excerpt, read_time }) => ({ slug, title, category_slug, excerpt, read_time }))}
+      />
       <main>
-        <HeroStory />
-        <StartHere />
-        <Manuals />
-        <QuickReads />
-        <LowerEditorial />
-        <Newsletter />
+        {heroArticle && <HeroStory heroArticle={heroArticle} secondaryStories={secondaryStories} />}
+        <StartHere config={config} />
+        <Manuals categories={categories} config={config} />
+        <QuickReads stories={quickReads} config={config} />
+        <LowerEditorial config={config} />
+        <Newsletter config={config} />
       </main>
-      <SiteFooter year={now.getFullYear()} />
+      <SiteFooter year={now.getFullYear()} config={config} />
     </>
   );
 }

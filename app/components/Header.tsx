@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { contactEmail, socialLinks } from "../data/contact";
-import { popularTopics } from "../data/homepage";
+import { searchArticles, type SearchSuggestionArticle } from "@/lib/cms/search";
+import type { CategoryRecord, SiteConfig } from "@/lib/cms/types";
 import { BrandLogo } from "./BrandLogo";
-import { Icon } from "./Icon";
-
-const navItems = ["Work", "Money", "Skills", "Life", "Opportunity"];
-const newsTopics = ["AI", "Careers", "Money", "Ghana", "Business"];
+import { Icon, type IconName } from "./Icon";
 const timeZones = [
   { label: "ACC", zone: "Africa/Accra" },
   { label: "LDN", zone: "Europe/London" },
@@ -30,17 +27,15 @@ function getWorldTimes() {
   );
 }
 
-export function Header({ issueDate, initialWorldTimes }: { issueDate: string; initialWorldTimes: Record<string, string> }) {
+export function Header({ issueDate, initialWorldTimes, config, categories, articles }: { issueDate: string; initialWorldTimes: Record<string, string>; config: SiteConfig; categories: CategoryRecord[]; articles: SearchSuggestionArticle[] }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [worldTimes, setWorldTimes] = useState<Record<string, string>>(initialWorldTimes);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const filteredTopics = useMemo(
-    () => popularTopics.filter((topic) => topic.toLowerCase().includes(query.toLowerCase())),
-    [query],
-  );
+  const suggestions = useMemo(() => searchArticles(deferredQuery, articles).slice(0, 6), [articles, deferredQuery]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -68,19 +63,19 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
       <header className="site-header">
         <div className="info-bar page-shell">
           <div className="info-bar__topics">
-            <strong>Today in the Manual</strong>
-            {newsTopics.map((topic) => <span key={topic}>{topic}</span>)}
+            <strong>{config.headerLabel}</strong>
+            {config.headerTopics.map((topic) => <span key={topic}>{topic}</span>)}
           </div>
           <div className="info-bar__right">
             <div className="header-contact">
-              <a className="header-contact__email" href={`mailto:${contactEmail}`} aria-label={`Email Today’s Manual at ${contactEmail}`}>
+              <a className="header-contact__email" href={`mailto:${config.contactEmail}`} aria-label={`Email Today’s Manual at ${config.contactEmail}`}>
                 <Icon name="mail" size={13} />
-                <span>{contactEmail}</span>
+                <span>{config.contactEmail}</span>
               </a>
               <div className="header-socials" aria-label="Today’s Manual header social media">
-                {socialLinks.map((social) => (
+                {config.socialLinks.map((social) => (
                   <a href={social.href} aria-label={`Today’s Manual on ${social.label}`} target="_blank" rel="noreferrer" key={social.label}>
-                    <Icon name={social.icon} size={13} />
+                    <Icon name={social.icon as IconName} size={13} />
                   </a>
                 ))}
               </div>
@@ -93,17 +88,17 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
                 </time>
               ))}
             </div>
-            <p className="info-bar__issue"><span>Issue 001</span> <i /> <time>{issueDate}</time></p>
+            <p className="info-bar__issue"><span>{config.issueLabel}</span> <i /> <time>{issueDate}</time></p>
           </div>
         </div>
         <div className="main-nav page-shell">
-          <Link className="main-nav__brand" href="/" aria-label="Today’s Manual home"><BrandLogo /></Link>
+          <Link className="main-nav__brand" href="/" aria-label="Today’s Manual home"><BrandLogo src={config.logoUrl} /></Link>
           <nav className="main-nav__links" aria-label="Main navigation">
-            {navItems.map((item) => <Link key={item} href={`/${item.toLowerCase()}`}>{item}</Link>)}
+            {categories.map((item) => <Link key={item.slug} href={`/${item.slug}`}>{item.title}</Link>)}
           </nav>
           <div className="main-nav__actions">
             <button className="icon-button" type="button" onClick={() => setSearchOpen(true)} aria-label="Open search"><Icon name="search" size={22} /></button>
-            <a className="icon-button mobile-email-button" href={`mailto:${contactEmail}`} aria-label={`Email Today’s Manual at ${contactEmail}`}><Icon name="mail" size={20} /></a>
+            <a className="icon-button mobile-email-button" href={`mailto:${config.contactEmail}`} aria-label={`Email Today’s Manual at ${config.contactEmail}`}><Icon name="mail" size={20} /></a>
             <Link className="manual-link" href="#the-manual">The Manual <Icon name="chevron" size={16} /></Link>
             <Link className="subscribe-button" href="#newsletter">Subscribe</Link>
             <button className="icon-button menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Icon name="menu" size={24} /></button>
@@ -115,25 +110,25 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
         <button className="overlay-backdrop" type="button" onClick={() => setMenuOpen(false)} aria-label="Close menu" />
         <div className="mobile-drawer__panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
           <div className="mobile-drawer__head">
-            <Link href="/" onClick={() => setMenuOpen(false)}><BrandLogo /></Link>
+            <Link href="/" onClick={() => setMenuOpen(false)}><BrandLogo src={config.logoUrl} /></Link>
             <button className="icon-button" type="button" onClick={() => setMenuOpen(false)} aria-label="Close menu"><Icon name="close" size={24} /></button>
           </div>
           <nav aria-label="Mobile navigation">
-            {navItems.map((item, index) => (
-              <Link key={item} href={`/${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}><span>0{index + 1}</span>{item}<Icon name="arrow" /></Link>
+            {categories.map((item, index) => (
+              <Link key={item.slug} href={`/${item.slug}`} onClick={() => setMenuOpen(false)}><span>{String(index + 1).padStart(2, "0")}</span>{item.title}<Icon name="arrow" /></Link>
             ))}
           </nav>
           <Link className="mobile-drawer__subscribe" href="#newsletter" onClick={() => setMenuOpen(false)}>Get the Morning Manual <Icon name="arrow" /></Link>
           <div className="mobile-drawer__contact">
             <p className="eyebrow">Contact and follow</p>
-            <a className="mobile-drawer__email" href={`mailto:${contactEmail}`}>
+            <a className="mobile-drawer__email" href={`mailto:${config.contactEmail}`}>
               <Icon name="mail" size={18} />
-              <span>{contactEmail}</span>
+              <span>{config.contactEmail}</span>
             </a>
             <div className="mobile-drawer__socials" aria-label="Today’s Manual mobile social media">
-              {socialLinks.map((social) => (
+              {config.socialLinks.map((social) => (
                 <a href={social.href} aria-label={`Today’s Manual on ${social.label}`} target="_blank" rel="noreferrer" key={social.label}>
-                  <Icon name={social.icon} size={18} />
+                  <Icon name={social.icon as IconName} size={18} />
                 </a>
               ))}
             </div>
@@ -148,20 +143,19 @@ export function Header({ issueDate, initialWorldTimes }: { issueDate: string; in
         </div>
         <div className="search-overlay__content">
           <h2>What are you trying<br />to figure out<span className="accent">?</span></h2>
-          <label className="search-field">
-            <span className="sr-only">Search topics</span>
+          <form className="search-field" action="/search" role="search" onSubmit={() => setSearchOpen(false)}>
+            <label className="sr-only" htmlFor="site-search">Search all articles</label>
             <Icon name="search" size={28} />
-            <input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search careers, money, skills…" />
-          </label>
-          <div className="popular-topics">
-            <p className="eyebrow">Popular topics</p>
-            <div>
-              {(query ? filteredTopics : popularTopics).map((topic) => (
-                <Link key={topic} href={`/article/${topic.toLowerCase().replaceAll(" ", "-")}`} onClick={() => setSearchOpen(false)}>{topic}<Icon name="arrow" size={16} /></Link>
-              ))}
-              {query && filteredTopics.length === 0 && <p className="search-empty">No matching topic yet. Try a broader search.</p>}
-            </div>
-          </div>
+            <input id="site-search" name="q" ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try ‘interview’, ‘first job’ or ‘money’…" autoComplete="off" />
+            <button type="submit" aria-label="Search"><Icon name="arrow" size={20} /></button>
+          </form>
+          {query.trim() ? <div className="search-suggestions" aria-live="polite">
+            <div className="search-suggestions__heading"><p className="eyebrow">Best matches</p><Link href={`/search?q=${encodeURIComponent(query)}`} onClick={() => setSearchOpen(false)}>See all results <Icon name="arrow" size={15} /></Link></div>
+            {suggestions.length > 0 ? <div className="search-suggestions__list">{suggestions.map((article) => <Link key={article.slug} href={`/article/${article.slug}`} onClick={() => setSearchOpen(false)}><span>{article.category_slug}</span><strong>{article.title}</strong><small>{article.read_time}</small><Icon name="arrow" size={17} /></Link>)}</div> : <div className="search-empty"><strong>No close match yet.</strong><p>Try fewer words, a related term, or browse all results.</p></div>}
+          </div> : <div className="popular-topics">
+            <p className="eyebrow">Popular searches</p>
+            <div>{config.popularTopics.map((topic) => <Link key={topic} href={`/search?q=${encodeURIComponent(topic)}`} onClick={() => setSearchOpen(false)}>{topic}<Icon name="arrow" size={16} /></Link>)}</div>
+          </div>}
         </div>
       </div>
     </>

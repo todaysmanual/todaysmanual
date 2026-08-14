@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getContentBundle } from "@/lib/cms/content";
 import "./globals.css";
+
+export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,34 +15,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://todaysmanual.com"),
-  title: {
-    default: "Today’s Manual — The guide for what comes next",
-    template: "%s — Today’s Manual",
-  },
-  description:
-    "Practical guidance for young Africans navigating work, money, skills, life and opportunity.",
-  icons: {
-    icon: "/todaysmanuallogo.png",
-    shortcut: "/todaysmanuallogo.png",
-    apple: "/todaysmanuallogo.png",
-  },
-  openGraph: {
-    title: "Today’s Manual — The guide for what comes next",
-    description: "Practical guidance for navigating work, money, skills, life and opportunity.",
-    type: "website",
-    url: "https://todaysmanual.com",
-    siteName: "Today's Manual",
-    images: [{ url: "/og.png", width: 1731, height: 909, alt: "Today’s Manual — The guide for what comes next" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Today’s Manual — The guide for what comes next",
-    description: "Practical guidance for navigating work, money, skills, life and opportunity.",
-    images: ["/og.png"],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { config } = await getContentBundle();
+  return {
+    metadataBase: new URL("https://todaysmanual.com"),
+    title: { default: config.siteTitle, template: `%s — ${config.siteTitle}` },
+    description: config.siteDescription,
+    icons: {
+      icon: [{ url: "/todaysmanuallogo.png", type: "image/png", sizes: "512x512" }],
+      shortcut: "/todaysmanuallogo.png",
+      apple: [{ url: "/todaysmanuallogo.png", type: "image/png", sizes: "512x512" }],
+    },
+    openGraph: {
+      title: config.siteTitle,
+      description: config.siteDescription,
+      type: "website",
+      url: "https://todaysmanual.com",
+      siteName: config.siteTitle,
+      images: [{ url: config.ogImageUrl, alt: config.siteTitle }],
+    },
+    twitter: { card: "summary_large_image", title: config.siteTitle, description: config.siteDescription, images: [config.ogImageUrl] },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#f7f3ec",

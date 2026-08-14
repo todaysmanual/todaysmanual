@@ -2,10 +2,11 @@
 
 import { FormEvent, useState } from "react";
 import { Icon } from "./Icon";
+import type { SiteConfig } from "@/lib/cms/types";
 
 type FormState = "idle" | "loading" | "success";
 
-export function WaitlistForm() {
+export function WaitlistForm({ copy }: { copy: SiteConfig["newsletter"] }) {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [state, setState] = useState<FormState>("idle");
@@ -64,8 +65,8 @@ export function WaitlistForm() {
       >
         <span className="waitlist-success__mark" aria-hidden="true"><Icon name="mail" size={19} /></span>
         <span>
-          <strong>You&apos;re on the Morning Manual list.</strong>
-          <small>Watch your inbox for the next edition.</small>
+          <strong>{copy.successTitle}</strong>
+          <small>{copy.successDescription}</small>
         </span>
       </div>
     );
@@ -106,7 +107,7 @@ export function WaitlistForm() {
           type="submit"
           disabled={state === "loading"}
         >
-          <span>{state === "loading" ? "Joining…" : "Get the Manual"}</span>
+          <span>{state === "loading" ? "Joining…" : copy.buttonLabel}</span>
         </button>
       </div>
       {error && (

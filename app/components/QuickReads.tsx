@@ -1,27 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { quickReads } from "../data/homepage";
+import type { ArticleRecord, SiteConfig } from "@/lib/cms/types";
 import { Icon } from "./Icon";
 
-export function QuickReads() {
+export function QuickReads({ stories, config }: { stories: ArticleRecord[]; config: SiteConfig }) {
   return (
     <section className="quick-section section-rule" aria-labelledby="quick-title">
       <div className="page-shell quick-section__grid">
         <header className="section-intro section-intro--quick">
-          <h2 id="quick-title">You should<br />know this<span className="accent">.</span></h2>
-          <p>Quick reads to help you make smarter decisions.</p>
+          <h2 id="quick-title">{config.quickReadsTitle}</h2>
+          <p>{config.quickReadsDescription}</p>
           <Link className="text-link" href="/skills">See all quick reads <Icon name="arrow" size={16} /></Link>
         </header>
         <div className="quick-strip">
-          {quickReads.map((story) => (
+          {stories.map((story, index) => (
             <article className="quick-card" key={story.id}>
               <Link href={`/article/${story.slug}`}>
                 <span className="quick-card__image">
-                  <img src={story.image} alt={story.imageAlt} loading="lazy" width="1200" height="800" />
-                  <span>{story.id}</span>
+                  <img src={story.image_url} alt={story.image_alt} loading="lazy" width="1200" height="800" />
+                  <span>{String(index + 1).padStart(2, "0")}</span>
                 </span>
                 <strong>{story.title}</strong>
-                <small>{story.readTime}</small>
+                <small>{story.read_time}</small>
               </Link>
             </article>
           ))}

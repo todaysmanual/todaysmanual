@@ -1,7 +1,7 @@
-import { startHereItems } from "../data/homepage";
+import type { SiteConfig } from "@/lib/cms/types";
 import { Icon } from "./Icon";
 
-export function StartHere() {
+export function StartHere({ config }: { config: SiteConfig }) {
   return (
     <section className="start-here section-rule" aria-labelledby="start-here-title">
       <svg className="route-line" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
@@ -10,11 +10,11 @@ export function StartHere() {
       </svg>
       <div className="page-shell start-here__grid">
         <header className="section-intro section-intro--compact">
-          <p className="eyebrow">Start here</p>
-          <h2 id="start-here-title">Where are you<br />right now<span className="accent">?</span></h2>
+          <p className="eyebrow">{config.startHereEyebrow}</p>
+          <h2 id="start-here-title">{config.startHereTitle}</h2>
         </header>
         <div className="start-cards">
-          {startHereItems.map((item) => (
+          {config.startHereItems.map((item) => (
             <a className="start-card" href={item.href} key={item.title}>
               <span className="start-card__icon" style={{ backgroundColor: item.color }}><Icon name={item.icon} size={27} /></span>
               <strong>{item.title}</strong>
@@ -27,4 +27,3 @@ export function StartHere() {
     </section>
   );
 }
-

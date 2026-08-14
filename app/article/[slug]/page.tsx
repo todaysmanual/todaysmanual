@@ -1,47 +1,52 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { heroArticle, quickReads, secondaryStories } from "../../data/homepage";
+import { notFound } from "next/navigation";
+import { getArticleBySlug } from "@/lib/cms/content";
 import { BrandLogo } from "../../components/BrandLogo";
 import { Icon } from "../../components/Icon";
 
-const allStories = [heroArticle, ...secondaryStories, ...quickReads];
-
-function titleFromSlug(slug: string) {
-  return slug.split("-").map((word) => `${word[0]?.toUpperCase() ?? ""}${word.slice(1)}`).join(" ");
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const story = allStories.find((item) => item.slug === slug);
-  return { title: story?.title ?? titleFromSlug(slug) };
+  const { article } = await getArticleBySlug(slug);
+  return { title: article?.title ?? "Article", description: article?.excerpt };
+}
+
+function ArticleBody({ body }: { body: string }) {
+  const blocks = body.split(/\n{2,}/).map((block) => block.trim()).filter(Boolean);
+  return blocks.map((block, index) => {
+    if (block.startsWith("## ")) return <h2 key={index}>{block.slice(3)}</h2>;
+    if (block.startsWith("### ")) return <h3 key={index}>{block.slice(4)}</h3>;
+    if (block.split("\n").every((line) => line.startsWith("- "))) {
+      return <ul key={index}>{block.split("\n").map((line) => <li key={line}>{line.slice(2)}</li>)}</ul>;
+    }
+    return <p key={index}>{block}</p>;
+  });
 }
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const story = allStories.find((item) => item.slug === slug);
-  const title = story?.title ?? titleFromSlug(slug);
-  const image = story?.image ?? "/editorial/work.jpg";
-  const imageAlt = story?.imageAlt ?? "Today’s Manual editorial story";
+  const { article: story, config } = await getArticleBySlug(slug);
+  if (!story) notFound();
 
   return (
     <main className="article-page">
       <nav className="article-nav page-shell" aria-label="Article navigation">
-        <Link href="/" className="article-nav__logo"><BrandLogo /></Link>
+        <Link href="/" className="article-nav__logo"><BrandLogo src={config.logoUrl} /></Link>
         <Link href="/" className="route-page__back"><Icon name="arrow" size={17} /> Back to home</Link>
       </nav>
       <article>
         <header className="article-page__header page-shell">
-          <p className="eyebrow eyebrow--orange">{story?.category ?? "Today’s Manual"} / Guide</p>
-          <h1>{title}</h1>
-          <p>{story?.excerpt ?? "A practical Today’s Manual guide is being prepared for this topic. The full story will be published in an upcoming edition."}</p>
-          <div className="article-page__meta">By Today’s Manual <i /> {story?.readTime ?? "Coming soon"}</div>
+          <p className="eyebrow eyebrow--orange">{story.category_slug} / Guide</p>
+          <h1>{story.title}</h1>
+          <p>{story.excerpt}</p>
+          <div className="article-page__meta">By {story.author} <i /> {story.read_time}</div>
         </header>
-        <figure className="article-page__image page-shell"><img src={image} alt={imageAlt} width="1600" height="1000" /></figure>
-        <div className="article-page__placeholder page-shell">
-          <p className="eyebrow">Article preview</p>
-          <h2>The useful version is on its way.</h2>
-          <p>We’re building this story with the context, examples and practical next steps it deserves. Explore the homepage for more guidance in the meantime.</p>
+        <figure className="article-page__image page-shell"><img src={story.image_url} alt={story.image_alt} width="1600" height="1000" /></figure>
+        <div className="article-page__body page-shell">
+          <ArticleBody body={story.body} />
           <Link className="dark-button" href="/">Explore Today’s Manual <Icon name="arrow" size={17} /></Link>
         </div>
       </article>
