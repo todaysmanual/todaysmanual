@@ -59,6 +59,54 @@ test("serves the Ghana-focused open image credit register", async () => {
   assert.match(html, /commons\.wikimedia\.org/);
 });
 
+test("serves every article linked from the homepage and footer", async () => {
+  const slugs = [
+    "the-interview-manual",
+    "prepare-before-graduating",
+    "start-your-career",
+    "grow-faster-at-work",
+    "build-something-of-your-own",
+    "find-your-next-step",
+    "voices",
+    "about-us",
+    "our-mission",
+    "editorial-principles",
+    "write-for-us",
+    "contributors",
+    "the-manual",
+    "opportunities",
+    "podcast",
+    "videos",
+    "advertise",
+    "partner-with-us",
+    "privacy-policy",
+    "terms-of-use",
+  ];
+
+  for (const slug of slugs) {
+    const response = await render(`/article/${slug}`);
+    assert.equal(response.status, 200, `${slug} should render`);
+  }
+
+  const interview = await (await render("/article/the-interview-manual")).text();
+  assert.match(interview, /Before the interview/);
+  assert.match(interview, /During the interview/);
+  assert.match(interview, /After the interview/);
+});
+
+test("serves an accessible contact form linked from the footer", async () => {
+  const response = await render("/contact");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Let’s talk/);
+  assert.match(html, /name="email"/);
+  assert.match(html, /name="subject"/);
+  assert.match(html, /name="message"/);
+
+  const homepage = await (await render()).text();
+  assert.match(homepage, /href="\/contact"/);
+});
+
 test("includes responsive, accessible, motion-aware production styling", async () => {
   const [css, packageJson] = await Promise.all([
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),

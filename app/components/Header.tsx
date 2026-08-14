@@ -11,6 +11,22 @@ const timeZones = [
   { label: "NYC", zone: "America/New_York" },
 ] as const;
 
+const topicDestinations: Record<string, string> = {
+  "career change": "/article/find-your-next-step",
+  ai: "/article/skills-that-will-pay-in-2030",
+  salary: "/article/salary-is-not-net-worth",
+  cv: "/article/the-interview-manual",
+  masters: "/article/what-happens-after-university",
+  entrepreneurship: "/article/build-something-of-your-own",
+  "remote work": "/article/start-your-career",
+  money: "/money",
+  productivity: "/article/grow-faster-at-work",
+};
+
+function topicHref(topic: string) {
+  return topicDestinations[topic.toLowerCase()] ?? `/article/${topic.toLowerCase().replaceAll(" ", "-")}`;
+}
+
 function getWorldTimes() {
   const now = new Date();
   return Object.fromEntries(
@@ -153,7 +169,7 @@ export function Header({ issueDate, initialWorldTimes, config, categories }: { i
             <p className="eyebrow">Popular topics</p>
             <div>
               {(query ? filteredTopics : config.popularTopics).map((topic) => (
-                <Link key={topic} href={`/article/${topic.toLowerCase().replaceAll(" ", "-")}`} onClick={() => setSearchOpen(false)}>{topic}<Icon name="arrow" size={16} /></Link>
+                <Link key={topic} href={topicHref(topic)} onClick={() => setSearchOpen(false)}>{topic}<Icon name="arrow" size={16} /></Link>
               ))}
               {query && filteredTopics.length === 0 && <p className="search-empty">No matching topic yet. Try a broader search.</p>}
             </div>

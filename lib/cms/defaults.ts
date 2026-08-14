@@ -10,6 +10,7 @@ import {
 import { contactEmail, socialLinks } from "@/app/data/contact";
 import { imageCredits } from "@/app/data/imageCredits";
 import type { ArticleRecord, CategoryRecord, SiteConfig } from "./types";
+import { linkedPages } from "./linked-pages";
 
 const fallbackBody = [
   "## The useful version is on its way",
@@ -43,7 +44,7 @@ export const defaultArticles: ArticleRecord[] = [
   heroArticle,
   ...secondaryStories,
   ...quickReads,
-].map((article, index) => toArticle(article, index));
+].map((article, index) => toArticle(article, index)).concat(linkedPages);
 
 export const defaultCategories: CategoryRecord[] = manuals.map((manual, index) => ({
   slug: manual.slug,
@@ -111,7 +112,7 @@ export const defaultSiteConfig: SiteConfig = {
     { title: "Explore", links: defaultCategories.map((category) => ({ label: `${category.title} Manual`, href: `/${category.slug}` })) },
     { title: "About", links: ["About Us", "Our Mission", "Editorial Principles", "Write for Us", "Contributors"].map((label) => ({ label, href: `/article/${label.toLowerCase().replaceAll(" ", "-")}` })) },
     { title: "Resources", links: ["The Manual", "Opportunities", "Newsletter", "Podcast", "Videos"].map((label) => ({ label, href: label === "Newsletter" ? "/#newsletter" : `/article/${label.toLowerCase().replaceAll(" ", "-")}` })).concat([{ label: "Image Credits", href: "/image-credits" }]) },
-    { title: "Support", links: ["Contact Us", "Advertise", "Partner With Us", "Privacy Policy", "Terms of Use"].map((label) => ({ label, href: label === "Contact Us" ? `mailto:${contactEmail}` : `/article/${label.toLowerCase().replaceAll(" ", "-")}` })) },
+    { title: "Support", links: ["Contact Us", "Advertise", "Partner With Us", "Privacy Policy", "Terms of Use"].map((label) => ({ label, href: label === "Contact Us" ? "/contact" : `/article/${label.toLowerCase().replaceAll(" ", "-")}` })) },
   ],
   footerSignoff: "Made in Africa for the world we live in.",
   imageCredits: imageCredits.map((credit) => ({ ...credit })),
