@@ -2,6 +2,8 @@
 -- Run this migration in the Supabase SQL editor or with `supabase db push`.
 
 create extension if not exists pgcrypto;
+create schema if not exists private;
+grant usage on schema private to anon, authenticated;
 
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
@@ -11,7 +13,7 @@ create table if not exists public.profiles (
   updated_at timestamptz not null default now()
 );
 
-create or replace function public.is_cms_admin()
+create or replace function private.is_cms_admin()
 returns boolean
 language sql
 stable
@@ -24,8 +26,8 @@ as $$
   );
 $$;
 
-revoke all on function public.is_cms_admin() from public;
-grant execute on function public.is_cms_admin() to anon, authenticated;
+revoke all on function private.is_cms_admin() from public;
+grant execute on function private.is_cms_admin() to anon, authenticated;
 
 create table if not exists public.categories (
   slug text primary key check (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'),
@@ -91,6 +93,9 @@ create table if not exists public.audit_log (
   created_at timestamptz not null default now()
 );
 
+create index if not exists audit_log_changed_by_idx on public.audit_log(changed_by);
+create index if not exists site_settings_updated_by_idx on public.site_settings(updated_by);
+
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
@@ -125,6 +130,8 @@ begin
 end;
 $$;
 
+revoke all on function public.record_cms_change() from public, anon, authenticated;
+
 drop trigger if exists profiles_set_updated_at on public.profiles;
 create trigger profiles_set_updated_at before update on public.profiles for each row execute function public.set_updated_at();
 drop trigger if exists categories_set_updated_at on public.categories;
@@ -150,42 +157,57 @@ alter table public.audit_log enable row level security;
 
 drop policy if exists "Users can read their own CMS profile" on public.profiles;
 create policy "Users can read their own CMS profile" on public.profiles for select to authenticated
-using ((select auth.uid()) = id or public.is_cms_admin());
-drop policy if exists "Admins manage CMS profiles" on public.profiles;
-create policy "Admins manage CMS profiles" on public.profiles for all to authenticated
-using (public.is_cms_admin()) with check (public.is_cms_admin());
+using ((select auth.uid()) = id or private.is_cms_admin());
+drop policy if exists "Admins insert CMS profiles" on public.profiles;
+create policy "Admins insert CMS profiles" on public.profiles for insert to authenticated with check (private.is_cms_admin());
+drop policy if exists "Admins update CMS profiles" on public.profiles;
+create policy "Admins update CMS profiles" on public.profiles for update to authenticated using (private.is_cms_admin()) with check (private.is_cms_admin());
+drop policy if exists "Admins delete CMS profiles" on public.profiles;
+create policy "Admins delete CMS profiles" on public.profiles for delete to authenticated using (private.is_cms_admin());
 
 drop policy if exists "Public reads published categories" on public.categories;
 create policy "Public reads published categories" on public.categories for select to anon, authenticated
-using (published or public.is_cms_admin());
-drop policy if exists "CMS team manages categories" on public.categories;
-create policy "CMS team manages categories" on public.categories for all to authenticated
-using (public.is_cms_admin()) with check (public.is_cms_admin());
+using (published or private.is_cms_admin());
+drop policy if exists "CMS team inserts categories" on public.categories;
+create policy "CMS team inserts categories" on public.categories for insert to authenticated with check (private.is_cms_admin());
+drop policy if exists "CMS team updates categories" on public.categories;
+create policy "CMS team updates categories" on public.categories for update to authenticated using (private.is_cms_admin()) with check (private.is_cms_admin());
+drop policy if exists "CMS team deletes categories" on public.categories;
+create policy "CMS team deletes categories" on public.categories for delete to authenticated using (private.is_cms_admin());
 
 drop policy if exists "Public reads published articles" on public.articles;
 create policy "Public reads published articles" on public.articles for select to anon, authenticated
-using (status = 'published' or public.is_cms_admin());
-drop policy if exists "CMS team manages articles" on public.articles;
-create policy "CMS team manages articles" on public.articles for all to authenticated
-using (public.is_cms_admin()) with check (public.is_cms_admin());
+using (status = 'published' or private.is_cms_admin());
+drop policy if exists "CMS team inserts articles" on public.articles;
+create policy "CMS team inserts articles" on public.articles for insert to authenticated with check (private.is_cms_admin());
+drop policy if exists "CMS team updates articles" on public.articles;
+create policy "CMS team updates articles" on public.articles for update to authenticated using (private.is_cms_admin()) with check (private.is_cms_admin());
+drop policy if exists "CMS team deletes articles" on public.articles;
+create policy "CMS team deletes articles" on public.articles for delete to authenticated using (private.is_cms_admin());
 
 drop policy if exists "Public reads site configuration" on public.site_settings;
 create policy "Public reads site configuration" on public.site_settings for select to anon, authenticated
-using (key = 'site_config' or public.is_cms_admin());
-drop policy if exists "CMS team manages site configuration" on public.site_settings;
-create policy "CMS team manages site configuration" on public.site_settings for all to authenticated
-using (public.is_cms_admin()) with check (public.is_cms_admin());
+using (key = 'site_config' or private.is_cms_admin());
+drop policy if exists "CMS team inserts site configuration" on public.site_settings;
+create policy "CMS team inserts site configuration" on public.site_settings for insert to authenticated with check (private.is_cms_admin());
+drop policy if exists "CMS team updates site configuration" on public.site_settings;
+create policy "CMS team updates site configuration" on public.site_settings for update to authenticated using (private.is_cms_admin()) with check (private.is_cms_admin());
+drop policy if exists "CMS team deletes site configuration" on public.site_settings;
+create policy "CMS team deletes site configuration" on public.site_settings for delete to authenticated using (private.is_cms_admin());
 
 drop policy if exists "Anyone can join the newsletter" on public.subscribers;
 create policy "Anyone can join the newsletter" on public.subscribers for insert to anon, authenticated
 with check (status = 'active' and source = 'website');
-drop policy if exists "CMS team manages subscribers" on public.subscribers;
-create policy "CMS team manages subscribers" on public.subscribers for all to authenticated
-using (public.is_cms_admin()) with check (public.is_cms_admin());
+drop policy if exists "CMS team reads subscribers" on public.subscribers;
+create policy "CMS team reads subscribers" on public.subscribers for select to authenticated using (private.is_cms_admin());
+drop policy if exists "CMS team updates subscribers" on public.subscribers;
+create policy "CMS team updates subscribers" on public.subscribers for update to authenticated using (private.is_cms_admin()) with check (private.is_cms_admin());
+drop policy if exists "CMS team deletes subscribers" on public.subscribers;
+create policy "CMS team deletes subscribers" on public.subscribers for delete to authenticated using (private.is_cms_admin());
 
 drop policy if exists "CMS team reads audit log" on public.audit_log;
 create policy "CMS team reads audit log" on public.audit_log for select to authenticated
-using (public.is_cms_admin());
+using (private.is_cms_admin());
 
 grant select on public.categories, public.articles, public.site_settings to anon, authenticated;
 grant insert on public.subscribers to anon, authenticated;
@@ -198,17 +220,17 @@ on conflict (id) do update set public = excluded.public, file_size_limit = exclu
 
 drop policy if exists "CMS team uploads site media" on storage.objects;
 create policy "CMS team uploads site media" on storage.objects for insert to authenticated
-with check (bucket_id = 'site-media' and public.is_cms_admin());
+with check (bucket_id = 'site-media' and private.is_cms_admin());
 drop policy if exists "CMS team updates site media" on storage.objects;
 create policy "CMS team updates site media" on storage.objects for update to authenticated
-using (bucket_id = 'site-media' and public.is_cms_admin())
-with check (bucket_id = 'site-media' and public.is_cms_admin());
+using (bucket_id = 'site-media' and private.is_cms_admin())
+with check (bucket_id = 'site-media' and private.is_cms_admin());
 drop policy if exists "CMS team deletes site media" on storage.objects;
 create policy "CMS team deletes site media" on storage.objects for delete to authenticated
-using (bucket_id = 'site-media' and public.is_cms_admin());
+using (bucket_id = 'site-media' and private.is_cms_admin());
 drop policy if exists "CMS team lists site media" on storage.objects;
 create policy "CMS team lists site media" on storage.objects for select to authenticated
-using (bucket_id = 'site-media' and public.is_cms_admin());
+using (bucket_id = 'site-media' and private.is_cms_admin());
 
 insert into public.categories (slug, title, description, color, image_url, image_alt, sort_order, published) values
 ('work', 'Work', 'Careers, workplace culture and growth.', '#f15a24', '/editorial/work.jpg', 'Ghanaian professionals and students collaborating around laptops at a workshop', 0, true),
