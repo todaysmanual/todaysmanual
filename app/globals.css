@@ -267,10 +267,12 @@ img { display: block; max-width: 100%; }
 .article-page__meta i { width: 4px; height: 4px; background: var(--orange); }
 .article-page__image { height: min(62vw, 700px); }
 .article-page__image img { width: 100%; height: 100%; object-fit: cover; }
-.article-page__placeholder { max-width: 780px; padding-block: 4rem 7rem; }
-.article-page__placeholder h2 { margin: .8rem 0; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -.06em; }
-.article-page__placeholder > p:not(.eyebrow) { color: var(--muted); line-height: 1.7; }
-.article-page__placeholder .dark-button { margin-top: 1rem; }
+.article-page__body { max-width: 780px; padding-block: 4rem 7rem; }
+.article-page__body h2 { margin: 2.5rem 0 .8rem; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -.06em; line-height: 1; }
+.article-page__body h3 { margin: 2rem 0 .7rem; font-size: 1.45rem; letter-spacing: -.035em; }
+.article-page__body p, .article-page__body li { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+.article-page__body ul { padding-left: 1.4rem; }
+.article-page__body .dark-button { margin-top: 2rem; }
 
 /* Image credits */
 .credits-page__header { max-width: 900px; padding-block: clamp(3.5rem, 8vw, 7rem) 2.5rem; text-align: center; }

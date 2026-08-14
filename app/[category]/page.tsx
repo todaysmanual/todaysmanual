@@ -1,14 +1,12 @@
 import { notFound } from "next/navigation";
 import { CategoryPage } from "../components/CategoryPage";
-import { categoryNames } from "../data/homepage";
+import { getCategoryBySlug } from "@/lib/cms/content";
 
-export function generateStaticParams() {
-  return categoryNames.map((category) => ({ category }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function CategoryRoute({ params }: { params: Promise<{ category: string }> }) {
-  const { category } = await params;
-  if (!categoryNames.includes(category as (typeof categoryNames)[number])) notFound();
-  return <CategoryPage category={category} />;
+  const { category: slug } = await params;
+  const { category, articles } = await getCategoryBySlug(slug);
+  if (!category) notFound();
+  return <CategoryPage category={category} stories={articles} />;
 }
-

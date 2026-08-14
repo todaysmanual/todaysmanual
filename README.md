@@ -1,8 +1,9 @@
-# vinext-starter
+# Today’s Manual
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+A full-stack editorial publication built with Next.js/vinext and a Supabase
+backend. The owner studio at `/admin` controls articles, homepage sections,
+manuals, navigation, branding, newsletter subscribers, and every replaceable
+image.
 
 ## Prerequisites
 
@@ -16,16 +17,21 @@ npm run dev
 npm run build
 ```
 
+The existing editorial content is bundled as a safe fallback. To enable the
+live CMS, follow [BACKEND_SETUP.md](./BACKEND_SETUP.md).
+
 This starter does not use `wrangler.jsonc`.
 
-## Included Shape
+## Backend shape
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+- Supabase Postgres stores published and draft content, settings, subscribers,
+  editor profiles, and audit history.
+- Supabase Auth protects `/admin` data operations.
+- Supabase Storage serves owner-uploaded publication images.
+- Row Level Security allows public reads of published content and restricts all
+  CMS writes to approved editors.
+- The migration in `supabase/migrations/` creates and seeds the complete system.
+- Resend optionally sends owner notifications for new newsletter signups.
 
 ## Workspace Auth Headers
 

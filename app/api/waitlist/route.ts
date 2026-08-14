@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createPublicSupabaseClient } from "@/lib/supabase/public";
 
 export const runtime = "nodejs";
 
@@ -38,18 +39,34 @@ export async function POST(request: Request) {
     );
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "Waitlist email delivery is not configured." },
-      { status: 503 },
-    );
+  const supabase = createPublicSupabaseClient();
+  let saved = false;
+
+  if (supabase) {
+    const { error } = await supabase.from("subscribers").insert({
+      email,
+      source: "website",
+      status: "active",
+    });
+
+    // Duplicate signups are intentionally treated as success.
+    if (!error || error.code === "23505") {
+      saved = true;
+    } else {
+      console.error("Supabase rejected a waitlist signup", error.message);
+    }
   }
 
-  const resend = new Resend(apiKey);
-  const from = process.env.WAITLIST_FROM_EMAIL?.trim() || fallbackSender;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return saved
+      ? NextResponse.json({ ok: true })
+      : NextResponse.json({ error: "Newsletter signup is not configured." }, { status: 503 });
+  }
 
   try {
+    const resend = new Resend(apiKey);
+    const from = process.env.WAITLIST_FROM_EMAIL?.trim() || fallbackSender;
     const { error } = await resend.emails.send(
       {
         from,
@@ -72,18 +89,14 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Resend rejected a waitlist notification", error);
-      return NextResponse.json(
-        { error: "We could not add you right now. Please try again." },
-        { status: 502 },
-      );
+      if (!saved) return NextResponse.json({ error: "We could not add you right now. Please try again." }, { status: 502 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Waitlist notification failed", error);
-    return NextResponse.json(
-      { error: "We could not add you right now. Please try again." },
-      { status: 502 },
-    );
+    return saved
+      ? NextResponse.json({ ok: true })
+      : NextResponse.json({ error: "We could not add you right now. Please try again." }, { status: 502 });
   }
 }
