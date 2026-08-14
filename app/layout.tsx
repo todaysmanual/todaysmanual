@@ -21,7 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL("https://todaysmanual.com"),
     title: { default: config.siteTitle, template: `%s — ${config.siteTitle}` },
     description: config.siteDescription,
-    icons: { icon: config.logoUrl, shortcut: config.logoUrl, apple: config.logoUrl },
+    icons: {
+      icon: [{ url: "/todaysmanuallogo.png", type: "image/png", sizes: "512x512" }],
+      shortcut: "/todaysmanuallogo.png",
+      apple: [{ url: "/todaysmanuallogo.png", type: "image/png", sizes: "512x512" }],
+    },
     openGraph: {
       title: config.siteTitle,
       description: config.siteDescription,
