@@ -40,7 +40,13 @@ export default async function Home() {
 
   return (
     <>
-      <Header issueDate={issueDate} initialWorldTimes={initialWorldTimes} config={config} categories={categories} />
+      <Header
+        issueDate={issueDate}
+        initialWorldTimes={initialWorldTimes}
+        config={config}
+        categories={categories}
+        articles={articles.map(({ slug, title, category_slug, excerpt, read_time }) => ({ slug, title, category_slug, excerpt, read_time }))}
+      />
       <main>
         {heroArticle && <HeroStory heroArticle={heroArticle} secondaryStories={secondaryStories} />}
         <StartHere config={config} />

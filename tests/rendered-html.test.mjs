@@ -107,6 +107,26 @@ test("serves an accessible contact form linked from the footer", async () => {
   assert.match(homepage, /href="\/contact"/);
 });
 
+test("searches live editorial content with ranking, synonyms and typo tolerance", async () => {
+  const homepage = await (await render()).text();
+  assert.match(homepage, /action="\/search"/);
+  assert.match(homepage, /Search all articles/);
+
+  const typoResponse = await render("/search?q=intervew");
+  assert.equal(typoResponse.status, 200);
+  const typoHtml = await typoResponse.text();
+  assert.match(typoHtml, /Results for/);
+  assert.match(typoHtml, /intervew/);
+  assert.match(typoHtml, /The Interview Manual/);
+
+  const synonymHtml = await (await render("/search?q=finance")).text();
+  assert.match(synonymHtml, /Your Salary Isn’t Your Net Worth/);
+
+  const emptyHtml = await (await render("/search?q=zzzz-no-such-guide")).text();
+  assert.match(emptyHtml, /No results found/);
+  assert.match(emptyHtml, /Browse every article/);
+});
+
 test("includes responsive, accessible, motion-aware production styling", async () => {
   const [css, packageJson] = await Promise.all([
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),

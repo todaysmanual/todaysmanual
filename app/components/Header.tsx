@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { searchArticles, type SearchSuggestionArticle } from "@/lib/cms/search";
 import type { CategoryRecord, SiteConfig } from "@/lib/cms/types";
 import { BrandLogo } from "./BrandLogo";
 import { Icon, type IconName } from "./Icon";
@@ -10,22 +11,6 @@ const timeZones = [
   { label: "LDN", zone: "Europe/London" },
   { label: "NYC", zone: "America/New_York" },
 ] as const;
-
-const topicDestinations: Record<string, string> = {
-  "career change": "/article/find-your-next-step",
-  ai: "/article/skills-that-will-pay-in-2030",
-  salary: "/article/salary-is-not-net-worth",
-  cv: "/article/the-interview-manual",
-  masters: "/article/what-happens-after-university",
-  entrepreneurship: "/article/build-something-of-your-own",
-  "remote work": "/article/start-your-career",
-  money: "/money",
-  productivity: "/article/grow-faster-at-work",
-};
-
-function topicHref(topic: string) {
-  return topicDestinations[topic.toLowerCase()] ?? `/article/${topic.toLowerCase().replaceAll(" ", "-")}`;
-}
 
 function getWorldTimes() {
   const now = new Date();
@@ -42,17 +27,15 @@ function getWorldTimes() {
   );
 }
 
-export function Header({ issueDate, initialWorldTimes, config, categories }: { issueDate: string; initialWorldTimes: Record<string, string>; config: SiteConfig; categories: CategoryRecord[] }) {
+export function Header({ issueDate, initialWorldTimes, config, categories, articles }: { issueDate: string; initialWorldTimes: Record<string, string>; config: SiteConfig; categories: CategoryRecord[]; articles: SearchSuggestionArticle[] }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [worldTimes, setWorldTimes] = useState<Record<string, string>>(initialWorldTimes);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const filteredTopics = useMemo(
-    () => config.popularTopics.filter((topic) => topic.toLowerCase().includes(query.toLowerCase())),
-    [config.popularTopics, query],
-  );
+  const suggestions = useMemo(() => searchArticles(deferredQuery, articles).slice(0, 6), [articles, deferredQuery]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -160,20 +143,19 @@ export function Header({ issueDate, initialWorldTimes, config, categories }: { i
         </div>
         <div className="search-overlay__content">
           <h2>What are you trying<br />to figure out<span className="accent">?</span></h2>
-          <label className="search-field">
-            <span className="sr-only">Search topics</span>
+          <form className="search-field" action="/search" role="search" onSubmit={() => setSearchOpen(false)}>
+            <label className="sr-only" htmlFor="site-search">Search all articles</label>
             <Icon name="search" size={28} />
-            <input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search careers, money, skills…" />
-          </label>
-          <div className="popular-topics">
-            <p className="eyebrow">Popular topics</p>
-            <div>
-              {(query ? filteredTopics : config.popularTopics).map((topic) => (
-                <Link key={topic} href={topicHref(topic)} onClick={() => setSearchOpen(false)}>{topic}<Icon name="arrow" size={16} /></Link>
-              ))}
-              {query && filteredTopics.length === 0 && <p className="search-empty">No matching topic yet. Try a broader search.</p>}
-            </div>
-          </div>
+            <input id="site-search" name="q" ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try ‘interview’, ‘first job’ or ‘money’…" autoComplete="off" />
+            <button type="submit" aria-label="Search"><Icon name="arrow" size={20} /></button>
+          </form>
+          {query.trim() ? <div className="search-suggestions" aria-live="polite">
+            <div className="search-suggestions__heading"><p className="eyebrow">Best matches</p><Link href={`/search?q=${encodeURIComponent(query)}`} onClick={() => setSearchOpen(false)}>See all results <Icon name="arrow" size={15} /></Link></div>
+            {suggestions.length > 0 ? <div className="search-suggestions__list">{suggestions.map((article) => <Link key={article.slug} href={`/article/${article.slug}`} onClick={() => setSearchOpen(false)}><span>{article.category_slug}</span><strong>{article.title}</strong><small>{article.read_time}</small><Icon name="arrow" size={17} /></Link>)}</div> : <div className="search-empty"><strong>No close match yet.</strong><p>Try fewer words, a related term, or browse all results.</p></div>}
+          </div> : <div className="popular-topics">
+            <p className="eyebrow">Popular searches</p>
+            <div>{config.popularTopics.map((topic) => <Link key={topic} href={`/search?q=${encodeURIComponent(topic)}`} onClick={() => setSearchOpen(false)}>{topic}<Icon name="arrow" size={16} /></Link>)}</div>
+          </div>}
         </div>
       </div>
     </>
